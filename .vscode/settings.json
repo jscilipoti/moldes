@@ -1,0 +1,19 @@
+{
+  "editor.rulers": [80],
+  "workbench.colorCustomizations": {
+      "editorRuler.foreground": "#AAFF00"
+  },
+  "fortran.linter.includePaths": [
+    "${workspaceFolder}/app",
+    "${workspaceFolder}/src",
+    "${workspaceFolder}/build/**",
+    "${workspaceFolder}/.mod"
+  ],
+  "fortran.linter.extraArgs": [
+    "-Wall",
+    "-Wextra",
+    "-J${workspaceFolder}/.mod"
+  ],
+  "fortran.fortls.sortKeywords": true,
+  "fortran.formatting.formatter": "fprettify",
+}
