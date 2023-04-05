@@ -1,6 +1,6 @@
 subroutine SolvRea ()
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -65,7 +65,7 @@ endinterface
     idev = 6
 	idevr = 5    
     ifin2 = 0
-!   inicialización de variables GRPS
+!   inicializaciï¿½n de variables GRPS
 
 
     allocate(InputProblem01)    
@@ -78,15 +78,15 @@ endinterface
         read (idevr,"(a)") opt
         InputMethod = index ('12',opt)
     enddo    
-!Selección de modelo termodinámico y apertura de bases de datos 
+!Selecciï¿½n de modelo termodinï¿½mico y apertura de bases de datos 
     call ab_ban1(model)
-!---Selección de tabla de parámetros UNIFAC
+!---Selecciï¿½n de tabla de parï¿½metros UNIFAC
     call tabla_parametros(ipareq) 	
 
 
     if (InputMethod==1)then !Create a new input file : 1
         
-        ! Pide el título del problema    
+        ! Pide el tï¿½tulo del problema    
 2110    write (idev,"('Give problem title (maximum 70 characters)')") 
         read (idevr,510,err=2110) titl
         InputProblem01%ProblemTitle = titl
@@ -187,14 +187,14 @@ endinterface
         CALL SELECCION_GRUPOS (IMPRIM,KGRUP,IFIN2,NGR1,NGR2,NGR3,NGR4,MGR,family) !family
         call Store_Pr (ipareq)
         call Store_In ()
-        DO 6 I=1,MDV	!MDV: número de subgrupos intermedios
+        DO 6 I=1,MDV	!MDV: nï¿½mero de subgrupos intermedios
 			NGSDV(I,1)=MM(NPUNT(NGDV(I)))
 			NGSDV(I,2)=MJ(NPUNT(NGDV(I)))
 			NGSDV(I,3)=MK(NPUNT(NGDV(I)))
 			NGSDV(I,4)=MI(NPUNT(NGDV(I)))
 			NGSDV(I,5)=MH(NPUNT(NGDV(I)))
 6		CONTINUE
-	    DO 7 I=1,MSV	!MSV número de grupos terminales
+	    DO 7 I=1,MSV	!MSV nï¿½mero de grupos terminales
 			NGSSV(I,1)=MM(NPUNT(NGSV(I)))
 			NGSSV(I,2)=MJ(NPUNT(NGSV(I)))
 			NGSSV(I,3)=MK(NPUNT(NGSV(I)))
@@ -206,13 +206,13 @@ endinterface
         salir=.False.
         CALL STRUCTURE_GENERATOR (JIST,MS,3,NGSSV,NGSDV,SALIR,.FALSE.)    
  
-        !composición mezcla. Temporal para probar llecalas
+        !composiciï¿½n mezcla. Temporal para probar llecalas
         recorre_FMS => FMSs
         !cargo el oleico 1  1  2 14  6  1 43  1
         ms(1,:,:) = reshape((/1,2,6,43,0,0,0,0,0,0,1,14,1,1,0,0,0,0,0,0/),(/10,2/))
-        !butanol a la segunda posición
+        !butanol a la segunda posiciï¿½n
         ms(2,:,:) = reshape((/1,2,15,0,0,0,0,0,0,0,1,3,1,0,0,0,0,0,0,0/),(/10,2/))        
-        !pongo el agua a la tercera posición
+        !pongo el agua a la tercera posiciï¿½n
         ms(3,:,:) = reshape((/17,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0/),(/10,2/))
         !cargo el butyl oleate 1 2 2 17 6 1 23 1
         ms(4,:,:) = reshape((/1,2,6,23,0,0,0,0,0,0,2,17,1,1,0,0,0,0,0,0/),(/10,2/))    
@@ -252,7 +252,7 @@ endinterface
                     continue
                 elseif(iter==8)then
                     exit
-                else !debería entrar cuando conversion == NaN
+                else !deberï¿½a entrar cuando conversion == NaN
                     conversion = conversionorg + 0.1*iter
                 endif
                 iter = iter+1
@@ -289,7 +289,7 @@ endinterface
 !     	  
 !     	        read(5,*)ptr_FMS%tsolv
 !     	        tsolv=ptr_FMS%tsolv
-       !!!!CHECKEAR PARÁMETROS DE INTERACCIÓN!!!!!
+       !!!!CHECKEAR PARï¿½METROS DE INTERACCIï¿½N!!!!!
 
 !Carga de subgrupos del SOLVENTE en NPUNT y NPINT     
                 k=1
@@ -307,11 +307,11 @@ endinterface
     pause
 
 !...Formats
- 601format(' Give the group composition of the compound: ',&
+601 format(' Give the group composition of the compound: ',&
      	   ' id1,ny1,id2,ny2,etc.',/,                      &
            10x,'id1,id2: subgroup identification number',/,&
            10x,'ny1,ny2: number of subgroups id1,id2,etc',/)
- 970format (' ',/,' ','If it is OK: <ret>.  If not: 1.      ',$)
+970 format (' ',/,' ','If it is OK: <ret>.  If not: 1.      ',$)
  590  format (/,' Give the family of solvents to be generated:',///,&
              10x,'-Aromatic solvents                  : 1',//&
              10x,'-Single substance groups            : 2',//&
@@ -338,7 +338,7 @@ endinterface
     
     subroutine SeleccionarCompuesto(compuestos,n,ms)
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -361,7 +361,7 @@ endinterface
         write(6,"(/,I2,A1,$)") i,"-"
         j=1
         do while (compuestos(i,j,1)/=0)
-            write(6,"(A9,I2,$)") (FS(compuestos(I,J,1)),compuestos(I,J,2))
+            write(6,"(A9,I2,$)") FS(compuestos(I,J,1)), compuestos(I,J,2)
             j=j+1
         enddo
         !write(6,"(/)")
@@ -371,7 +371,7 @@ endinterface
     write (6,"(/,'Compound selected:',$)")
     j=1
     do while (compuestos(Sel,j,1)/=0)
-        write(6,"(A9,I2,$)") (FS(compuestos(Sel,J,1)),compuestos(Sel,J,2))
+        write(6,"(A9,I2,$)") FS(compuestos(Sel,J,1)), compuestos(Sel,J,2)
         j=j+1
     enddo
     write(*,*)''

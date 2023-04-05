@@ -8,7 +8,8 @@ subroutine open_proppdb(oprop)
 
 !SENTENCES      
     oprop = .False.  
-    open(unit=7,name='Database\PROP.pdb',access='direct',status='old',form='formatted',recl=624,err=20)
+    open(unit=7,file='Database\PROP.pdb',access='direct',status='old',&
+         form='formatted',recl=624,err=20)
 	goto 10
 
 20	write(6,*) '*ERROR* EN LA APERTURA DE "PROP.PDB"'
@@ -38,25 +39,25 @@ subroutine ab_ban1(mod)
     if(mod /= 3)then
         if(mod==1)then
             open (unit=13,file='Database\intrcn.mds',status='old',&
-                  access='direct',form='formatted',recl=850,CARRIAGECONTROL='LIST')   
+                  access='direct',form='formatted',recl=850)   
         else     
             open (unit=13,file='Database\intrcnas.mds',status='old',&
-                  access='direct',form='formatted',recl=850,CARRIAGECONTROL='LIST')        
+                  access='direct',form='formatted',recl=850)        
         endif
         open (unit=14,file='Database\gruposram.mds',status='old',&
-     	      access='direct',form='formatted',recl=300,CARRIAGECONTROL='LIST')
+     	      access='direct',form='formatted',recl=300)
         open (unit=15,file='Database\parvolas.mds',status='old',&
-              access='direct',form='formatted',recl=850,CARRIAGECONTROL='LIST')
+              access='direct',form='formatted',recl=850)
         open (unit=16,file='Database\pareneas.mds',status='old',&
-              access='direct',form='formatted',recl=850,CARRIAGECONTROL='LIST')    
+              access='direct',form='formatted',recl=850)    
     else
 
         open (unit=14,file='Database\gruposramgc.mds',status='old',&
-     	      access='direct',form='formatted',recl=263,CARRIAGECONTROL='LIST')
+     	      access='direct',form='formatted',recl=263)
         open (unit=13,file='Database\intrcngcalpha.mds',status='old',&
-              access='direct',form='formatted',recl=730,CARRIAGECONTROL='LIST')
+              access='direct',form='formatted',recl=730)
         open (unit=16,file='Database\intrcngckapa.mds',status='old',&
-              access='direct',form='formatted',recl=730,CARRIAGECONTROL='LIST')    
+              access='direct',form='formatted',recl=730)    
         
     endif
       
@@ -79,22 +80,17 @@ subroutine ab_ban1(mod)
       LOGICAL ASOC
       IF(ASOC)THEN
         open (unit=13,file='Database\intrcnas.mds',status='old',&
-             access='direct',form='formatted',recl=850,&
-           CARRIAGECONTROL='LIST')
+             access='direct',form='formatted',recl=850)
       ELSE
         open (unit=13,file='Database\intrcn.mds',status='old',&
-             access='direct',form='formatted',recl=850,&
-           CARRIAGECONTROL='LIST')
+             access='direct',form='formatted',recl=850)
       ENDIF
       open (unit=14,file='Database\gruposram.mds',status='old',&
-     	    access='direct',form='formatted',recl=300,&
-           CARRIAGECONTROL='LIST')
+     	    access='direct',form='formatted',recl=300)
       open (unit=15,file='Database\parvolas.mds',status='old',&
-             access='direct',form='formatted',recl=850,&
-           CARRIAGECONTROL='LIST')
+             access='direct',form='formatted',recl=850)
       open (unit=16,file='Database\pareneas.mds',status='old',&
-             access='direct',form='formatted',recl=850,&
-           CARRIAGECONTROL='LIST')
+             access='direct',form='formatted',recl=850)
       return
       end
 
@@ -247,7 +243,7 @@ END
 
 subroutine parin(NC,NG,IDEV,NOACE,MS)
 !
-!		Escribe parámetros de Q, R y a para subgrupos
+!		Escribe parï¿½metros de Q, R y a para subgrupos
 !
     use CONSTANTES
     use Input
@@ -279,7 +275,7 @@ subroutine parin(NC,NG,IDEV,NOACE,MS)
       JH(:)=0
       
 !-----Ordena de < a > , en el vector IH, todos los grupos que
-!     participan en la corrida (CAR, CPR y molécula a diseñar o solvente(s) a evaluar)  
+!     participan en la corrida (CAR, CPR y molï¿½cula a diseï¿½ar o solvente(s) a evaluar)  
 
  !     nk=0 !Cuenta la cantidad de componentes
  !!     IC=1
@@ -345,10 +341,10 @@ subroutine parin(NC,NG,IDEV,NOACE,MS)
       call ordenar_arreglo (ih,NGPM,ic) !ordena el vector ih
      
       
-      DO 73 I=1,IC ! Guarda en la posición de JH que corresponde al n° del grupo, la posición en IH
+      DO 73 I=1,IC ! Guarda en la posiciï¿½n de JH que corresponde al nï¿½ del grupo, la posiciï¿½n en IH
 73    JH(IH(I))=I
       
-!-----En guarda las cantidades de cada subgrupo según el mismo orden de columna que
+!-----En guarda las cantidades de cada subgrupo segï¿½n el mismo orden de columna que
 !     IH, pero en tres filas distintas (dependiendo de si es CAR, CPR o Sol.)
       
       NY(:,:)=0
@@ -423,7 +419,7 @@ subroutine parin(NC,NG,IDEV,NOACE,MS)
 191         WRITE(IDEV,"(6X,I2,5X,20I3)") I,(NY(I,K),K=1,IC)		!(6X,I2,5X,20I3)
       END IF
    85 CONTINUE
-!-----Checkea si exiten parámetros de interacción
+!-----Checkea si exiten parï¿½metros de interacciï¿½n
     if(model /= 3)then
       DO 20 I=1,NG !NG=I
          DO 20 J=1,NG
@@ -479,7 +475,7 @@ subroutine parin(NC,NG,IDEV,NOACE,MS)
 endsubroutine parin
 
 
-SUBROUTINE UNIPAR (NC,NG,T,MODEL,IOUT,NOACE,MS) !NG= n° main goup dist
+SUBROUTINE UNIPAR (NC,NG,T,MODEL,IOUT,NOACE,MS) !NG= nï¿½ main goup dist
     use constantes
       IMPLICIT real*8 (A-H,O-Z)
       integer::MS(NCOM,DiffStructGroups,2)
@@ -492,7 +488,7 @@ endsubroutine
 
 SUBROUTINE PARIN2 (NC,NG,MODEL,IPAREQ,IDEV,NOACE)
 !
-!		Escribe parámetros de Q,R y a para subgrupos
+!		Escribe parï¿½metros de Q,R y a para subgrupos
 !
       PARAMETER(NGPM=30,NGA=70,NCOM=3,NSCM=10,NMG=150)
       implicit real*8(A-H,O-Z)
@@ -644,18 +640,18 @@ SUBROUTINE PARAM(NC,NG,T)
       COMMON/UNIF/QT(NGPM,NCOM),TAU(NGPM,NGPM),S(NGPM,NCOM),F(NCOM),Q(NCOM),R(NCOM),P(NGPM,NGPM)
       DO 30 I=1,NG                                                            
          DO 30 J=1,NG                                                          
-   30       TAU(I,J)=DEXP(-P(I,J)/T) !P: parámetro de interacción grupal. Ec. 9 Fredenslund, A., Jones, R. L., & Prausnitz, J. M. (1975)
+   30       TAU(I,J)=DEXP(-P(I,J)/T) !P: parï¿½metro de interacciï¿½n grupal. Ec. 9 Fredenslund, A., Jones, R. L., & Prausnitz, J. M. (1975)
                                                              
       DO 50 I=1,NC                                                            
          DO 50 K=1,NG                                                          
 		  S(K,I)=0.D0                                                        
             DO 50 M=1,NG
-   50          S(K,I)=S(K,I)+QT(M,I)*TAU(M,K) !QT: fracción de área del grupo k. S: Ec. 7 Fredenslund, A., Jones, R. L., & Prausnitz, J. M. (1975)                        
+   50          S(K,I)=S(K,I)+QT(M,I)*TAU(M,K) !QT: fracciï¿½n de ï¿½rea del grupo k. S: Ec. 7 Fredenslund, A., Jones, R. L., & Prausnitz, J. M. (1975)                        
     
       DO 60 I=1,NC                                                            
          F(I)=1.D0                                                             
          DO 60 J=1,NG 
-   60       F(I)=F(I)+QT(J,I)*DLOG(S(J,I)) !Segundo término de Ec. 7 Fredenslund, A., Jones, R. L., & Prausnitz, J. M. (1975)                             
+   60       F(I)=F(I)+QT(J,I)*DLOG(S(J,I)) !Segundo tï¿½rmino de Ec. 7 Fredenslund, A., Jones, R. L., & Prausnitz, J. M. (1975)                             
       RETURN                                                                  
 endsubroutine                                                                   
 
@@ -867,9 +863,10 @@ endsubroutine tabla_parametros
 !c
 !c-----------------------------------------------------------------------------
       implicit real*8 (a-h,o-z)
-      external nom_gru1,Leer_In
+      real*8,external:: Leer_In
+      character*8,external::nom_gru1
       dimension kgrup(nsel),mgr(nsel)
-      character*8 fs1,fs2,nom_gru1
+      character*8 fs1,fs2
       logical inter
 !c     common ipant
 !c
@@ -1114,7 +1111,7 @@ endsubroutine tabla_parametros
 !c-------------------------------------------------------------------------------
 !c
 !c      Esta subrutina carga los numeros de los subgrupos segun su valencia
-!c      para  el  diseño  molecular  de solventes y los nombres de todos los
+!c      para  el  diseï¿½o  molecular  de solventes y los nombres de todos los
 !c      subgrupos del banco de datos correspondiente.
 !c
 !c      Datos de entrada:
@@ -1319,7 +1316,7 @@ endsubroutine tabla_parametros
 		else
 !c			call limp (idev)         
 			if (family.eq.'single valence groups') then
-!c				Se anuló la restricción de grupos terminales 	
+!c				Se anulï¿½ la restricciï¿½n de grupos terminales 	
 !c			    if ((ifam.ge.3).and.(ifam.le.5)) then
 !c			    call no_isomeros (igrupi,ifig,mfvi,ndv,maingr,jgrup,
 !c     *		                      numj)
@@ -1374,9 +1371,9 @@ endsubroutine sel_gru_fam
 
 SUBROUTINE LEEPAR (J,IREC1,IPAREQ,NGRUPA,ENASST,RKASST)
 !c-----------------------------------------------------------------
-!c     Lee los parámetros de las bases de datos PARVOLAS.MDS 
-!c     (volumen de asociación, UNIT=15) y PARENEAS.MDS (energía de 
-!c     asociación, UNIT=16)  
+!c     Lee los parï¿½metros de las bases de datos PARVOLAS.MDS 
+!c     (volumen de asociaciï¿½n, UNIT=15) y PARENEAS.MDS (energï¿½a de 
+!c     asociaciï¿½n, UNIT=16)  
 !c-----------------------------------------------------------------
 IMPLICIT real*8 (A-H,O-Z)
 PARAMETER (NMG=150)
@@ -1704,7 +1701,7 @@ end
 
 subroutine car_combprop (i1,ipareq,mm,mj,mk,mi,mh)
 !c-------------------------------------------------------------------
-!c      Esta subrutina devuelve las propiedades de combinación  
+!c      Esta subrutina devuelve las propiedades de combinaciï¿½n  
 !c      del subgrupo Unifac i1 y tabla de parametros ipareq:
 !c                     1: liquido-liquido
 !c                     2: liquido-vapor

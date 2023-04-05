@@ -4,10 +4,10 @@ contains
 subroutine Evaluate_Mixture(MolecularDesign,FinalStruct,MS,NC,Top,BPSolute,icomp,NSWIP,NSBI,ACEPTABLE,&
            ListPerformance,ent)
 !-------------------------------------------------
-!   Descripción: Calcula propiedades solventes
+!   Descripciï¿½n: Calcula propiedades solventes
 !   - Variables de entrada
 !       compound(10,2):componente
-!       mop:    operación de separación (extracción L-L(1); destilación extractiva(2))
+!       mop:    operaciï¿½n de separaciï¿½n (extracciï¿½n L-L(1); destilaciï¿½n extractiva(2))
 !       icomp:  structure type of the component
 !		            Aliphatic		        :0
 !		            Aromatic		        :1
@@ -57,25 +57,25 @@ subroutine Evaluate_Mixture(MolecularDesign,FinalStruct,MS,NC,Top,BPSolute,icomp
     do i=1,size(ms(3,:,2))
         if(ms(3,i,2)<0)return
     enddo
-!   Cálculo y evaluación de peso molecular    
+!   Cï¿½lculo y evaluaciï¿½n de peso molecular    
     MWT = MolecularWeight (MS(NC,:,:))    
     if (INV) call MoldesInvertido (MS)
-!   Cálculo propiedades compuesto puro    
+!   Cï¿½lculo propiedades compuesto puro    
     call Calc_Prop_Pure(MS(3,:,:),icomp,Top,TCT = TCSolv, BPT=BPSolv, PvapT=PvapSolv)
     if(MolecularDesign .and. FinalStruct .and. (Top>TCSolv .or. Top>BPSolv))then
         NOACE = .True.
         return
     endif
-!   Cálculo propiedades de mezcla    
+!   Cï¿½lculo propiedades de mezcla    
     call Solvent_Properties (MS,MOP,Top,SelT,SolPowT,SLostT,DistCoefT,VolatT,NOACE)
     if(model == 3)SLostT = PvapSolv*MWT/100
 
     if (INV) call MoldesInvertido (MS)
     if (MolecularDesign .and. NOACE) then
-        NSWIP=NSWIP+1 !número de solventes sin parámetros de interacción
+        NSWIP=NSWIP+1 !nï¿½mero de solventes sin parï¿½metros de interacciï¿½n
         return
     endif
-!   Evaluación de propiedades de mezcla    
+!   Evaluaciï¿½n de propiedades de mezcla    
     if(ent==1)NSBI=NSBI+1 !Number of solvents with binary inf.
     if(MOP.EQ.0)then ! Llamado desde Properties
 	elseif(MOP.EQ.1) then !LIQUID-LIQUID EXTRACTION
@@ -132,7 +132,7 @@ subroutine Evaluate_Mixture(MolecularDesign,FinalStruct,MS,NC,Top,BPSolute,icomp
     elseif(MOP==3)then
             puntero%Selectivity = SelT*MSMW(1)/MSMW(2)
     endif
-!...Evaluación    
+!...Evaluaciï¿½n    
     puntero%SolventLost = puntero%SolventLost * 100
     puntero%SolventPower = puntero%SolventPower * 100
     if (MolecularDesign)call AcceptStruct_Mixture(FinalStruct,puntero,Aceptable)
@@ -147,10 +147,10 @@ endsubroutine Evaluate_Mixture
 !=======================================================================================
 subroutine Evaluate_Pure (FinalStruct,component,Top,ICOMP,NSEW,ACEPTABLE,ListProperties)
 !-------------------------------------------------
-!   Descripción: Calcula propiedades físicas de compuesto puro
+!   Descripciï¿½n: Calcula propiedades fï¿½sicas de compuesto puro
 !   - Variables de entrada
 !       component(10,2):componente
-!       mop:    operación de separación (extracción L-L(1); destilación extractiva(2))
+!       mop:    operaciï¿½n de separaciï¿½n (extracciï¿½n L-L(1); destilaciï¿½n extractiva(2))
 !       icomp:  structure type of the component
 !		            Aliphatic		        :0
 !		            Aromatic		        :1
@@ -164,7 +164,7 @@ subroutine Evaluate_Pure (FinalStruct,component,Top,ICOMP,NSEW,ACEPTABLE,ListPro
     use Input
     implicit none
 !   VARIABLES DE ENTRADA
-    integer,intent(in)::ICOMP !ICOMP debería sacarse cuando se elimine la evaluación de propiedades de compuesto puro
+    integer,intent(in)::ICOMP !ICOMP deberï¿½a sacarse cuando se elimine la evaluaciï¿½n de propiedades de compuesto puro
     real*8,intent(in)::Top
     logical,intent(in)::FinalStruct
 !   VARIABLES DE SALIDA
@@ -190,10 +190,10 @@ subroutine Evaluate_Pure (FinalStruct,component,Top,ICOMP,NSEW,ACEPTABLE,ListPro
     nullify(ListProperties)
     allocate(ListProperties)
     ACEPTABLE=.False.
-!   Cálculo y evaluación de peso molecular    
+!   Cï¿½lculo y evaluaciï¿½n de peso molecular    
     MWT = MolecularWeight (component)
     if (LMW(2).and.(MWT>MWB(2)))then
-        nsew=nsew+1 !número de estructuras con alto peso molecular
+        nsew=nsew+1 !nï¿½mero de estructuras con alto peso molecular
         return
     endif 
     if (LMW(1).and.(MWT<MWB(1))) return
@@ -225,7 +225,7 @@ endsubroutine Evaluate_Pure
 !==========================================================================    
     subroutine EvaluationSolvRea (Solv)
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -247,7 +247,7 @@ endsubroutine Evaluate_Pure
 !==========================================================================    
     subroutine Constraints_Selection()
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -363,19 +363,22 @@ endsubroutine Evaluate_Pure
     j=1
     do i=1,size(limits)
         if(limits(i)%ExistRunValue) then
-            if(imp==1)write(6,"(i2,1x,a8,': ',a50,a7,f8.2)")j, limits(i)%ID, limits(i)%cartel, limits(i)%unit, limits(i)%RunValue
+            if(imp==1)write(6,"(i2,1x,a8,': ',a50,a7,f8.2)")j, limits(i)%ID, &
+                      limits(i)%cartel, limits(i)%unit, limits(i)%RunValue
             lugar(j,1)=i
             lugar(j,2)=0
             j=j+1
         endif
         if(limits(i)%ExistLowerBound) then
-            if(imp==1)write(6,"(i2,1x,a8,': ','Minimun ',a42,a7,f8.2)")j, limits(i)%ID, limits(i)%cartel, limits(i)%unit, limits(i)%LowerBound
+            if(imp==1)write(6,"(i2,1x,a8,': ','Minimun ',a42,a7,f8.2)")j, &
+                limits(i)%ID, limits(i)%cartel, limits(i)%unit, limits(i)%LowerBound
             lugar(j,1)=i
             lugar(j,2)=1
             j=j+1
         endif
         if(limits(i)%ExistUpperBound) then
-            if(imp==1)write(6,"(i2,1x,a8,': ','Maximun ',a42,a7,f8.2)")j, limits(i)%ID, limits(i)%cartel, limits(i)%unit, limits(i)%UpperBound
+            if(imp==1)write(6,"(i2,1x,a8,': ','Maximun ',a42,a7,f8.2)")j, &
+                limits(i)%ID, limits(i)%cartel, limits(i)%unit, limits(i)%UpperBound
             lugar(j,1)=i
             lugar(j,2)=2
             j=j+1
@@ -517,7 +520,7 @@ endsubroutine Evaluate_Pure
     subroutine initialization()
     use Boundaries
     use PropertiesData
-!===Inicializazión
+!===Inicializaziï¿½n
     limits(1) =bound('MW      ','Molecular Weight of the final structure              ','       ',.False.,.False.,.False.,0.,0.,0.)
     limits(2) =bound('BP      ','Boiling Boint                                        ','(K)    ',.False.,.False.,.False.,0.,0.,0.)
     limits(3) =bound('PC      ','Critical Pressure                                    ','       ',.False.,.False.,.False.,0.,0.,0.)

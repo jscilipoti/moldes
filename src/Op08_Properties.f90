@@ -48,7 +48,7 @@ SUBROUTINE PROPERTIES1
       if ((ifam.lt.1).or.(ifam.gt.4)) then
 		go to 1200
       end if
-!---Selección cotas
+!---Selecciï¿½n cotas
       icod=0
       WRITE (*,802)
  802  FORMAT (/,'Choose lower and upper limits for the following properties:',/)
@@ -151,7 +151,7 @@ SUBROUTINE PROPERTIES1
       !COMPUESTOS CON DOS GRUPOS FUNCIONALES
       TITULO = '**** SOLVENTS WITH TWO FUNCTIONAL GROUPS '
       CALL ESCRIBIR_RESULTADOS (0,INGR2,5,100,MST,IGR2,PROV2,TITULO,6,OPT)  
-      !COMPUESTOS CON MÁS DE DOS GRUPOS FUNCIONALES
+      !COMPUESTOS CON Mï¿½S DE DOS GRUPOS FUNCIONALES
       TITULO = '**** SOLVENTS WITH MORE THAN TWO '//'FUNCTIONAL GROUPS ****'
       CALL ESCRIBIR_RESULTADOS (0,INGR3,5,100,MST,IGR3,PROV2,TITULO,6,OPT)
 !-----FORMATS      
@@ -167,7 +167,6 @@ SUBROUTINE PROPERTIES1
              10x,'-Cyclic solvents                    : 4',///&
      	      51x,' > ',$)    
  800  format (/,' ',A36)
- 801  format(E)
  803  FORMAT(A13,$)
  830  format (' ','Code',3x,'Parameter',30x,'min',7x,'max'/)
  840  format (' ',/,' If you want to change a parameter value give code'&
@@ -308,7 +307,7 @@ endinterface
       ENDIF
       ALLOCATE(CANTGRUP(NCANTCOM))
       CANTGRUP(:)=0
-      !Acomodación de grupos
+      !Acomodaciï¿½n de grupos
       CALL CR_PUNT3(NCANTCOM,MSS,NCANT,NPUNT,NGRUP,CANTGRUP)
       !Propiedades de grupos
       DO 10 I=1,NCANT
@@ -323,7 +322,7 @@ endinterface
       WRITE(6,618) NCANTCOM
       CALL PAUSA
 !-----CALCULO DE PROPIEDADES DE COMPUESTO PURO
-!     Inicialización de vectores donde se almacenarán las propiedades
+!     Inicializaciï¿½n de vectores donde se almacenarï¿½n las propiedades
       N=NCANTCOM
       ALLOCATE (PMOL(N),TC(N),PC(N),VC(N),BPOINT(N),VISC(N),DENSID(N),HVAP(N))
       PMOL(:)=0.
@@ -353,7 +352,7 @@ endinterface
  603  FORMAT (///, "These compounds have been entered: ",/) 
  610  FORMAT(//,"Enter the name(s) of the file(s) to open (<ret> to finish)",/)
  618  FORMAT (//,1X,"*",I3," COMPOUNDS *")
- 620  FORMAT(/,"File N°",I3,":   "$)
+ 620  FORMAT(/,"File Nï¿½",I3,":   "$)
  630  FORMAT (//,"These files have been selected: ",/)
  640  FORMAT (//,"If it is OK: <ret>. If not: 1 ",10X,">",$)
  650  FORMAT (//," *ERROR* al abrir archivo",A35," - To exit: 1" ,/,70X,'<RET>',$)

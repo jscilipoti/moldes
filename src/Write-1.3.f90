@@ -64,18 +64,25 @@ subroutine write_results (mop,idev,ifam,nsol)
         !Escribir encabezado
         if(mop == 0)then
             if(idev == 2)then
-                write(idev,"")
+                write(idev,*)
             else
-                write(idev,"")
+                write(idev,*)
             endif
         elseif(mop == 1)then
             if(idev == 2)then
-                write(idev,"(/,' - -     SELECT.  ','SOL.POW.  ','SOL.LOS.    ','M.W.    ','B.P.   ','DENS.RAT.  ','VAP.HEAT   ','DIS.COEF.  ','VISC.SOLV.  ','Pow     ',' Conversion'&
-                             /,' - -     [WT]     ','[WT %]    ','[WT %]      ',8X        ,'[K]    ',11X,          '[CAL/GMOL] ','[WT]       ','[mPa*seg]')")
+                write(idev,"(/,' - -     SELECT.  ','SOL.POW.  ','SOL.LOS.    '&
+                            ,'M.W.    ','B.P.   ','DENS.RAT.  ','VAP.HEAT   ',&
+                            'DIS.COEF.  ','VISC.SOLV.  ','Pow     ',&
+                            ' Conversion'&
+                             /,' - -     [WT]     ','[WT %]    ','[WT %]      '&
+                             ,8X        ,'[K]    ',11X,          '[CAL/GMOL] ',&
+                             '[WT]       ','[mPa*seg]')")
                 write(idev,"(110('*'))")
             else                                                                                                  
-                write(idev,"(/,1X,' DIS.COEF.',1X,'   SELECT.',1X,'  SOL.POW.',1X,' SOL.LOST.',1X,'      B.P.',1X,'       Pow',1X,'      M.W.',/,&
-                                  '    [ WT ]',1X,'    [ WT ]',1X,'  [ WT % ]',1X,'  [ WT % ]',1X,'       [K]',1X)")
+                write(idev,"(/,1X,' DIS.COEF.',1X,'   SELECT.',1X,'  SOL.POW.',&
+                1X,' SOL.LOST.',1X,'      B.P.',1X,'       Pow',1X,'      M.W.',/,&
+                                  '    [ WT ]',1X,'    [ WT ]',1X,'  [ WT % ]',&
+                                  1X,'  [ WT % ]',1X,'       [K]',1X)")
                 write(idev,"(80('*'))")
             endif
         elseif(mop == 2)then
@@ -93,9 +100,9 @@ subroutine write_results (mop,idev,ifam,nsol)
             endif       
         elseif(mop == 3)then
             if(idev == 2)then
-                write(idev,"")
+                write(idev,*)
             else
-                write(idev,"")
+                write(idev,*)
             endif
         elseif(mop == 4)then !PROVISORIO para reacciones!!!
                 write(idev,"(/,1X,'      Conversion','     B.P.',1X,'      M.W.',/,'                      [K]',1X)")
@@ -105,7 +112,7 @@ subroutine write_results (mop,idev,ifam,nsol)
         if (nGruposFunc > 4) nGruposFunc = 4
         write(idev,"(A70)") Titulo(nGruposFunc) 
         i=1
-        do while (i <= COMPXPAG) !bucle para imprimir páginas
+        do while (i <= COMPXPAG) !bucle para imprimir pï¿½ginas
             call write_compound(idev,mop,tazeo,recorre)
             if(.not.associated(recorre%next))then
                 recorre => recorre%next
@@ -119,7 +126,7 @@ subroutine write_results (mop,idev,ifam,nsol)
             i=i+1            
         enddo
         if(.not.associated(recorre))exit
-        if (idev==6)then !opciones para impresión por consola
+        if (idev==6)then !opciones para impresiï¿½n por consola
             write (IDEV,160)
             read (5,'(A)') OPT
             I1 = INDEX ('1234',OPT)
@@ -232,7 +239,8 @@ subroutine write_compound(idev,mop,tazeo,recorre)
           
       else
  
-        write (idev, "(1X, /, I4, ' º ', F8.2, F10.2, F10.3, F8.1, F8.1, F12.1, F11.2, X, G11.5, F11.3, F12.4, F10.2, 10(1A8, X, 1I2, 3X))") & 
+        write (idev, "(1X, /, I4, ' ï¿½ ', F8.2, F10.2, F10.3, F8.1, F8.1, F12.1, &
+        F11.2, X, G11.5, F11.3, F12.4, F10.2, 10(1A8, X, 1I2, 3X))") & 
        
           recorre%position, recorre%Selectivity, recorre%SolventPower, recorre%SolventLost, recorre%MolecularWeight,     &
           

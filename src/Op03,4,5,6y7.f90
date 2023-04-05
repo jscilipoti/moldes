@@ -50,7 +50,7 @@ endinterface
 	call ingresar_componentes (NC,prob)
 	nrcpr=0
       if (ipareq.eq.2) then
-!c	formación de comp (para el CPR) a partir de idf y nyf 
+!c	formaciï¿½n de comp (para el CPR) a partir de idf y nyf 
 	do k=1,2
         call checkdatos (ms(k,:,:),nisom,ident,nombre,formula)
 	  if (nisom.ne.0) then
@@ -148,7 +148,7 @@ endinterface
              'this system',/,'   in the ',a17,&
              ' UNIFAC table')
 5556  FORMAT (1X,/,' Give the system temperature (K)      ',' > ',$)
- 693	format (' ','Give the structure type of the component ',i,&
+ 693	format (' ','Give the structure type of the component ',i2,&
      		':',//,' ','Aliphatic:',20x,'0',&
      		 /,' ','Aromatic:',21x,'1',&
      		 /,' ','Single group solvent:',9x,'2',&
@@ -163,7 +163,7 @@ subroutine log_POW()
       use CONSTANTES
      
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -231,7 +231,7 @@ endinterface
 
       subroutine solubilities
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !-------------------------------------------------
       use input_data,only:ingresar_componentes
       use SubGrupos
@@ -306,7 +306,7 @@ endinterface
 !
       subroutine activity_coefficients
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida

@@ -34,7 +34,7 @@ program ECOFAS
     nfunc=1
     do while (.true.)    
         write (6,600)
-        read (5,'(i)') nfunc
+        read (5,'(i2)') nfunc
 	    if (nfunc.eq.1) then !Run a molecular design problem
             call Moldes(.True.)
         elseif (nfunc.eq.2) then !Evaluate specific solvents performances
@@ -103,7 +103,7 @@ endprogram ECOFAS
 !
 !    subroutine name
 !!-------------------------------------------------
-!!   Descripción
+!!   Descripciï¿½n
 !!   - Variables de entrada
 !!       vars:
 !!   - Variables de salida

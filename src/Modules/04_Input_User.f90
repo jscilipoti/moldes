@@ -227,7 +227,7 @@ subroutine load_pure_comp_prop (puntero)
         if (ipareq.eq.2) then
 		    call checkdatos (puntero%Formula,nisom,ident,nombre,formula)! checkea en prop.pdb
 		    
-		    if (nisom /= 0) call elegir_CXR (nisom,ident,nombre,formula,nrcar) !Si existe algún isómero, pregunta al usuario cuál elegir
+		    if (nisom /= 0) call elegir_CXR (nisom,ident,nombre,formula,nrcar) !Si existe algï¿½n isï¿½mero, pregunta al usuario cuï¿½l elegir
         end if
         
 !-------Carga de propiedades de componente puro
@@ -325,11 +325,11 @@ endsubroutine load_pure_comp_prop
 !--------------------------------------------------------------------------	
 !	Esta subrutina checkea o confirma la existencia en el
 !	banco de datos "Prop.pdb" de uno o mas compuestos cuya 
-!	estructura de grupos según UNIFAC sea igual a la que 
+!	estructura de grupos segï¿½n UNIFAC sea igual a la que 
 !	contiene el vector de entrada "compt".
-!	La variable de salida "nisomt" indica el número de
-!	diferentes isómeros que satisfacen tal condición.
-!	Sus números identificatorios y nombres se almacenan en 
+!	La variable de salida "nisomt" indica el nï¿½mero de
+!	diferentes isï¿½meros que satisfacen tal condiciï¿½n.
+!	Sus nï¿½meros identificatorios y nombres se almacenan en 
 !	los vectores "identt" y "nombret" respectivamente.
 !--------------------------------------------------------------------------	
 	parameter(NA=150)
@@ -399,8 +399,8 @@ endsubroutine load_pure_comp_prop
 !--------------------------------------------------------------------------	
 !	Esta subrutina utiliza Tb, Tc, Pc y W de una sustancia determinada
 !	(de la base de datos PROP.PDB) para calcular las constantes A1 y
-!	A2 que sean útiles para estimar la Pv de la sustancia a temperaturas
-!	cercanas a su punto de ebullición según la ecuación:
+!	A2 que sean ï¿½tiles para estimar la Pv de la sustancia a temperaturas
+!	cercanas a su punto de ebulliciï¿½n segï¿½n la ecuaciï¿½n:
 !	Ln(Pv)=A1-A2/T 
 !--------------------------------------------------------------------------
     use Input
@@ -430,7 +430,7 @@ endsubroutine load_pure_comp_prop
     puntero%MW = pmt    
     puntero%Dens = 0.001*PMT/VLIQ
 100	FORMAT(I4,A35,A20,A35,20I3,8D13.6)
-!c	Pv = Pc * 10** ((7/3)*(1+W)*(T-Tc)/T) !Esto era interpolando entre el punto crítico y Tr=0.7
+!c	Pv = Pc * 10** ((7/3)*(1+W)*(T-Tc)/T) !Esto era interpolando entre el punto crï¿½tico y Tr=0.7
 !c	Ahora, interpolando entre Tb y Tr=0.7:
     puntero%a(2) = dlog(Pc*10**(-1-W)/101325)/((1/Tb) - (1/(0.7*Tc)))
 	puntero%a(1) = alog(760.) + puntero%a(2)/Tb
@@ -454,7 +454,7 @@ endsubroutine load_pure_comp_prop
 
 subroutine enter_problem(nfunc)
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -477,7 +477,7 @@ endinterface
     integer::nsolut
     
 !...Sentencias
-!---Apertura del banco de datos y selección
+!---Apertura del banco de datos y selecciï¿½n
     call ab_ban1(model)	
 
 
@@ -539,14 +539,14 @@ subroutine leer_comp (ipareq,nomcom,comp)
 !c                           1: liquido-liquido
 !c                           2: liquido-vapor
 !c                           3: liquido-vapor a dilucion infinita.
-!c                   ngrmax: cantidad de grupos en la tabla de parámetros 
+!c                   ngrmax: cantidad de grupos en la tabla de parï¿½metros 
 !                            ipareq.
 !c                   nomcom: nombre del componente. Variable character *37.
 !c       
 !c     Variables de salida:
 !c     -------------------
-!c                     comp: vector de numeros de identificacion y números de 
-!                            repetición de subgrupos del componente 
+!c                     comp: vector de numeros de identificacion y nï¿½meros de 
+!                            repeticiï¿½n de subgrupos del componente 
 !                            seleccionado. 
 !c
 !c     Observacion:
@@ -869,7 +869,7 @@ endinterface
 !Variables internas
     integer::i,j,k,lenfile,ierror,qLimits,SolventsNumber,nousari
     integer,dimension(NCOM,DiffStructGroups,2)::MS
-    real*8::sclli,select,solv,pmma,dtc2s,tazeo,x1azeo,top !sacar estas variables cuando se actualice el código para mop==2
+    real*8::sclli,select,solv,pmma,dtc2s,tazeo,x1azeo,top !sacar estas variables cuando se actualice el cï¿½digo para mop==2
     character*1::sigue
     logical::nousarl
     
@@ -899,8 +899,8 @@ endinterface
     endif    
     
 !---    
-    read (1,"(A70)") InputProblem01%ProblemTitle !línea 1
-    read (1,"(3I3)") ipareq,InputProblem01%mop,npepis !línea 2
+    read (1,"(A70)") InputProblem01%ProblemTitle !lï¿½nea 1
+    read (1,"(3I3)") ipareq,InputProblem01%mop,npepis !lï¿½nea 2
     call ab_ban1(model)  !Apertura del banco de datos BADAUN 
     call SubGroups_Characterisation()  
     
@@ -909,12 +909,12 @@ endinterface
     nullify(InputProblem01%MixtureInput%Solutes)    
     nullify(InputProblem01%MixtureInput%PCR)    
    !Solutos
-    read(1,"(i2)") InputProblem01%MixtureInput%SolutesNumber !línea 3
+    read(1,"(i2)") InputProblem01%MixtureInput%SolutesNumber !lï¿½nea 3
     do i=1,InputProblem01%MixtureInput%SolutesNumber
         nullify(ptr_pcp)
         allocate(ptr_pcp)
-        read (1,"(20I3)",err=100) (ptr_pcp%formula(J,1),ptr_pcp%formula(J,2),J=1,DiffStructGroups) !línea 4
-100     read (1,"(F9.2)",err=101) ptr_pcp%BoilingPoint !línea 5
+        read (1,"(20I3)",err=100) (ptr_pcp%formula(J,1),ptr_pcp%formula(J,2),J=1,DiffStructGroups) !lï¿½nea 4
+100     read (1,"(F9.2)",err=101) ptr_pcp%BoilingPoint !lï¿½nea 5
 101     call incorporate_compound(ptr_pcp,InputProblem01%MixtureInput%Solutes)
         !Carga de subgrupos de solutos en NPUNT y NPINT
         k=1
@@ -928,7 +928,7 @@ endinterface
    !Ppal comp en el refinado
     nullify(ptr_pcp)
     allocate(ptr_pcp)
-    read (1,"(20I3)",err=102) (ptr_pcp%formula(J,1),ptr_pcp%formula(J,2),J=1,DiffStructGroups) ! línea 6
+    read (1,"(20I3)",err=102) (ptr_pcp%formula(J,1),ptr_pcp%formula(J,2),J=1,DiffStructGroups) ! lï¿½nea 6
 102 call incorporate_compound(ptr_pcp,InputProblem01%MixtureInput%PCR)
     !Carga de subgrupos de solutos en NPUNT y NPINT
     k=1
@@ -940,24 +940,24 @@ endinterface
    !Operation temperature
     read(1,*)InputProblem01%T
     
-!---Datos para el diseño molecular    
+!---Datos para el diseï¿½o molecular    
     if(MolecularDesign)then
-        read(1,"(20I3)")MDV,MSV,MSV1,MJK,InputProblem01%kilout,MDV2 !línea 7
+        read(1,"(20I3)")MDV,MSV,MSV1,MJK,InputProblem01%kilout,MDV2 !lï¿½nea 7
         !		MDV = Cantidad de subgrupos "intermedios" seleccionados por el usuario.
         ! 		MSV	= Cantidad de subgrupos "terminales" seleccionados por el usuario.
         !		MSV1 = MSV que no comparten un mismo grupo con subgrupos de valencia dual.
-        !		MJK = Tenía relación con la modificación de las propiedades de combinación.
+        !		MJK = Tenï¿½a relaciï¿½n con la modificaciï¿½n de las propiedades de combinaciï¿½n.
         !		KILOUT = Type of output
-        !       MDV2 = cantidad de subgrupos intermedios alifáticos seleccionados para ifam=1
+        !       MDV2 = cantidad de subgrupos intermedios alifï¿½ticos seleccionados para ifam=1
         MDV1=MDV-MDV2
-        !       MDV1 = cantidad de subgrupos aromáticos seleccionados por el usuario    
+        !       MDV1 = cantidad de subgrupos aromï¿½ticos seleccionados por el usuario    
         
    !    Carca de grupos
    !    Grupos intermedios
         NGDV(:)=0
         if(MDV > 0)then
-	        read(1,"(11I3)") NGK4,NGJ4,NGK3,NGK3J2,NGK2J3,NGK1J4,NGJ3,NGK2,NGK2J2,NGK1J3,NGJ2 !línea 8
-	    	read(1,"(20I3)") (NGDV(I),I=1,MDV) !línea 9 NGDV = Vector de tamaño MDV que contiene los identificadores de subgr. interm. selecc.
+	        read(1,"(11I3)") NGK4,NGJ4,NGK3,NGK3J2,NGK2J3,NGK1J4,NGJ3,NGK2,NGK2J2,NGK1J3,NGJ2 !lï¿½nea 8
+	    	read(1,"(20I3)") (NGDV(I),I=1,MDV) !lï¿½nea 9 NGDV = Vector de tamaï¿½o MDV que contiene los identificadores de subgr. interm. selecc.
             k=1
             do while(NGDV(k)/=0)
                 call CR_PUNTF(NGDV(k),NPUNT,NGRUP,NPINT,NINTT)
@@ -967,8 +967,8 @@ endinterface
    !    Grupos terminales
         NGSV(:)=0
         if(MSV > 0)then
-	        read(1,"(3I3)") NGK1,NGK1J2,NGM1 !línea 10
-	    	read(1,"(20I3)") (NGSV(I),I=1,MSV) !línea 11 NGSV = Vector de tamaño MSV que contiene los identificadores de subgr. termin. selecc.
+	        read(1,"(3I3)") NGK1,NGK1J2,NGM1 !lï¿½nea 10
+	    	read(1,"(20I3)") (NGSV(I),I=1,MSV) !lï¿½nea 11 NGSV = Vector de tamaï¿½o MSV que contiene los identificadores de subgr. termin. selecc.
             k=1
             do while(NGSV(k)/=0)
                 call CR_PUNTF(NGSV(k),NPUNT,NGRUP,NPINT,NINTT)
@@ -978,7 +978,7 @@ endinterface
    !    Grupos terminales que no comparten un mismo grupo ppal con subgrupos de valencia dual.    
         NGSV1(:)=0
         if(MSV1 > 0)then
-            read(1,"(20I3)") (NGSV1(I),I=1,MSV1) !NGSV1 = Vector de tamaño MSV1 que contiene los n° de subgr. term. selecc.                           
+            read(1,"(20I3)") (NGSV1(I),I=1,MSV1) !NGSV1 = Vector de tamaï¿½o MSV1 que contiene los nï¿½ de subgr. term. selecc.                           
             k=1
             do while(NGSV1(k)/=0)
                 call CR_PUNTF(NGSV1(k),NPUNT,NGRUP,NPINT,NINTT)
@@ -999,7 +999,7 @@ endinterface
                     read(1,*)limits(lugar(i,1))%UpperBound   
                 endif        
             enddo        
-            !variables que saqué SCLLI,SELECT,SOLV,SLSUP1,SLSUPL,DIST,PMMA
+            !variables que saquï¿½ SCLLI,SELECT,SOLV,SLSUP1,SLSUPL,DIST,PMMA
 	        read (1,*)	DENS2,IFAM,NSOL,IS,NALAR,(IALAR(I),I=1,NALAR)
                                            			
         
@@ -1034,10 +1034,10 @@ endinterface
         !								(ACH)4(ACNO2)1(ACCH2)1		: 4			
         !		Nsol  : Maximum number of solvents to be listed                 
         !		Is	  : Number of solvents per page
-        !		IALAR : Vector que (cuando ifam=4) puede contener los números
+        !		IALAR : Vector que (cuando ifam=4) puede contener los nï¿½meros
         !				1 al 4 indicando que los siguientes subgrupos tienen
-        !				parámetros de interacción con todos los subgrupos del 
-        !				CAR y el CPR, y también con ACH y ACCH2.
+        !				parï¿½metros de interacciï¿½n con todos los subgrupos del 
+        !				CAR y el CPR, y tambiï¿½n con ACH y ACCH2.
         !					ACH y ACCH2	: 1
         !					ACCl		: 2
         !					ACNH2		: 3
@@ -1146,9 +1146,9 @@ subroutine seleccion_grupos (IMPRIM,KGRUP,IFIN2,NGR1,NGR2,NGR3,NGR4,GruposSel,fa
 !   icyc:   subgrupos de valencia dual para compuestos ciclicos.
 !   iar:    subgrupos para compuestos aromaticos.
 !   igrp:   subgrupos que son compuestos moleculares.
-!   ima*:   Número de grupos en el vector *
+!   ima*:   Nï¿½mero de grupos en el vector *
                                                             
-1320GruposSel(:)=0
+1320 GruposSel(:)=0
 
 !==================================
 !   Intermediate groups
@@ -1278,7 +1278,7 @@ subroutine seleccion_grupos (IMPRIM,KGRUP,IFIN2,NGR1,NGR2,NGR3,NGR4,GruposSel,fa
 			if (mj.eq.0) then
 				NGK3=NGK3+1
 				ngr1(NGK3)=ngr(i)
-			else if (mk.eq.3) then !chequear si puede realmente pasar por acá
+			else if (mk.eq.3) then !chequear si puede realmente pasar por acï¿½
 				NGK3J2=NGK3J2+1
 				ngr2(NGK3J2)=ngr(i)
 			else if (mk.eq.2) then
@@ -1376,7 +1376,7 @@ subroutine seleccion_grupos (IMPRIM,KGRUP,IFIN2,NGR1,NGR2,NGR3,NGR4,GruposSel,fa
 		end if
 		MDV=MDV+NGJ2
 !c
-    else  ! Ahora no puede pasar mas por acá
+    else  ! Ahora no puede pasar mas por acï¿½
 !----------------------------------
 !   Cyclic groups
 !---------------------------------- 
@@ -1397,7 +1397,7 @@ subroutine seleccion_grupos (IMPRIM,KGRUP,IFIN2,NGR1,NGR2,NGR3,NGR4,GruposSel,fa
 	nalar = 0
 	do 1340 i=1,naa
 	    ialar(i) = 0
-1340continue
+1340 continue
 
 !---Ingreso de los grupos seleccionados al VGP
     if (MDV.gt.ins) then
@@ -1413,7 +1413,7 @@ subroutine seleccion_grupos (IMPRIM,KGRUP,IFIN2,NGR1,NGR2,NGR3,NGR4,GruposSel,fa
     call armar_grupos_distintos (grupos,MDV,kgrup,ifin01,ifin3)
 
 !---Confirmacion de los grupos seleccionados
-3060write (idev,1310) (Obtain_SubGroup_Name(mgr(i)),i=1,MDV)
+3060 write (idev,1310) (Obtain_SubGroup_Name(mgr(i)),i=1,MDV)
     write (idev,970)
     read (idevr,980,err=3060) icomp
     if (icomp.eq.1) then
@@ -1687,7 +1687,7 @@ endinterface
 	END DO
 	write(6,541)
 1960 call leer_comp (ipareq,nomco,comp)
-!c-----formación de comp (para el compuesto a checkear) a partir de idr y nyr 
+!c-----formaciï¿½n de comp (para el compuesto a checkear) a partir de idr y nyr 
 	k=1
 	do 5 i=1,19,2
 	  j =	(i+1)/2
@@ -1764,7 +1764,7 @@ SUBROUTINE CHECK_DATABASE()
 ! ====================================================================
 subroutine enter_mixture()
 !------------------------------------------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       none
 !   - Variables de salida
@@ -1797,22 +1797,22 @@ endinterface
     
 !SENTENCIAS  
 
-!---Inicialización de variables  
+!---Inicializaciï¿½n de variables  
     idev = 6
 	idevr = 5
     icant = 0
     allocate(InputProblem01%MixtureInput)
     nullify(InputProblem01%MixtureInput%PCR)    
-!---Selección de modelo termodinámico y apertura del banco de datos    
+!---Selecciï¿½n de modelo termodinï¿½mico y apertura del banco de datos    
     call ab_ban1(model) 
 
-!---Selección de operación de separación
+!---Selecciï¿½n de operaciï¿½n de separaciï¿½n
     call operation_separation(InputProblem01%mop)
 
-!---Selección de tabla de parámetros UNIFAC
+!---Selecciï¿½n de tabla de parï¿½metros UNIFAC
     call tabla_parametros(ipareq) 
 
-!---temperatura de operación
+!---temperatura de operaciï¿½n
     if(InputProblem01%mop.EQ.1)then !Liquid-Liquid extraction
 		write(idev,"(1X,/,' Give operation temperature (K)',19X,' > ',$)")
 		read(idevr,*) InputProblem01%T
@@ -1833,7 +1833,7 @@ endinterface
          InputProblem01%MixtureInput%SolutesNumber = 0
          do while(InputProblem01%MixtureInput%SolutesNumber == 0)
             write(idev,"(//,' How many solutes there are in the mixture?:',6X,' > ',$)")
-            read(5,"(I)") InputProblem01%MixtureInput%SolutesNumber
+            read(5,"(I2)") InputProblem01%MixtureInput%SolutesNumber
          enddo
         else
          nomco = 'Less  volatile  component:           '
@@ -1884,17 +1884,17 @@ endinterface
         
         if (icomp.eq.1) goto 960 ! Si se responde no OK, vuelve arriba a preguntar cantidad de solutos 
 
-    !---Búsqueda de propiedades de componente puro en prop.pdb
+    !---Bï¿½squeda de propiedades de componente puro en prop.pdb
         call load_pure_comp_prop (ptr_pcp)
         
-    !--Incorporporación del componente
+    !--Incorporporaciï¿½n del componente
 		call incorporate_compound(ptr_pcp,InputProblem01%MixtureInput%Solutes)  
     enddo & 
     ReadComp
     
 !---Lectura del Componente Principal del Refinado (CPR).    
-!   icant == 1 cuando el CPR ya fue ingresado, pero se volvió 
-!   a cambiar el o los CAR porque no estaban todos los parámetros de interacción
+!   icant == 1 cuando el CPR ya fue ingresado, pero se volviï¿½ 
+!   a cambiar el o los CAR porque no estaban todos los parï¿½metros de interacciï¿½n
     nullify(ptr_pcp)
     allocate(ptr_pcp)
     MGMixture(:) = 0    
@@ -1904,7 +1904,7 @@ endinterface
         call leer_comp (ipareq,nomco,ptr_pcp%Formula)
     endif
 
-!---Chequea parámetros de interacción entre grupos de solutos y PCR
+!---Chequea parï¿½metros de interacciï¿½n entre grupos de solutos y PCR
     i=1 
     MGMixture(:) = MGSolutes(:)
     do while(ptr_pcp%Formula(i,1)/=0)
@@ -1927,7 +1927,7 @@ endinterface
     endif
 
 !---Confirmacion del CPR
-3030write (idev,1210) nomco,(Obtain_SubGroup_Name(ptr_pcp%Formula(i,1)),&
+3030 write (idev,1210) nomco,(Obtain_SubGroup_Name(ptr_pcp%Formula(i,1)),&
                       ptr_pcp%Formula(i,2),i=1,count_groups(ptr_pcp%Formula(:,1)))
     write (idev,970)
     read (idevr,980,err=3030) icomp
@@ -1952,7 +1952,8 @@ endinterface
         i = 1
         do while(ptr_pcp%Formula(i,1) /= 0)
         !---Incorpora subgrupo 
-            call insert_group (ptr_pcp%Formula(i,1), InputProblem01%MixtureInput%SubGroups, size(InputProblem01%MixtureInput%SubGroups))
+            call insert_group (ptr_pcp%Formula(i,1), InputProblem01%MixtureInput%SubGroups, &
+                                size(InputProblem01%MixtureInput%SubGroups))
         !---Incorpora grupo principal    
             call insert_group (Obtain_MainGroup_Number(ptr_pcp%Formula(i,1)), &
                                InputProblem01%MixtureInput%MainGroups, size(InputProblem01%MixtureInput%MainGroups))
@@ -1992,7 +1993,7 @@ endsubroutine enter_mixture
 
 subroutine operation_separation(mop)
 !--------------------------------------------------
-!   Selección de la operación de separación
+!   Selecciï¿½n de la operaciï¿½n de separaciï¿½n
 !   mop = 
 !           1- Liquid-liquid extraction
 !           2- Etractive distillation
@@ -2015,9 +2016,9 @@ endsubroutine operation_separation
 
 subroutine azeotrope_input()
 !------------------------------------------------------
-!   Pregunta al usuario si el sistema forma algún azeó-
+!   Pregunta al usuario si el sistema forma algï¿½n azeï¿½-
 !   tropo y pide los valores de temperatura y composi-
-!   ción del mismo.
+!   ciï¿½n del mismo.
 !------------------------------------------------------
     use Input
     implicit none 
@@ -2035,7 +2036,7 @@ subroutine azeotrope_input()
 	i1 = index ('12',opt)
 	if (i1.eq.0) goto 80
 	
-	if (opt.eq.'1') then !si forma azeótropo
+	if (opt.eq.'1') then !si forma azeï¿½tropo
 110     write (idev,"(1x,/,' Give the azeotropic temperature (K)              ',' > ',$)") !90  format 
 		read (idevr,*,err=110)	tazeo
  
@@ -2079,7 +2080,7 @@ endmodule
 subroutine Load_Main_Groups(subNumber,MainGroups)
 !-------------------------------------------------------
 !   Esta subrutina carga el subgrupo subNumber en el 
-!   vector MainGroups si éste aún no está presente en 
+!   vector MainGroups si ï¿½ste aï¿½n no estï¿½ presente en 
 !   el mismo
 !-------------------------------------------------------
 
@@ -2111,7 +2112,7 @@ endsubroutine Load_Main_Groups
 subroutine insert_group (grupo,vector,n)
 !-----------------------------------------------------------------
 !   Esta subrutina agrega el grupo "grupo" al vector "vector" de
-!   dimensión "n"
+!   dimensiï¿½n "n"
 !-----------------------------------------------------------------
 implicit none
 !Variables de ENTRADA
@@ -2126,7 +2127,7 @@ logical::logic
     call buscaras(grupo,vector,n,logic)
     if(.not.logic)then
         i=1
-        do while(vector(i)/=0)!busca primera posición vacía
+        do while(vector(i)/=0)!busca primera posiciï¿½n vacï¿½a
             i=i+1
         enddo
         vector(i)=grupo
@@ -2158,42 +2159,45 @@ subroutine write_input_file (MolecularDesign)
 
     idev=1
 !SENTENCIAS
-    write (idev,"(a70,' !Problem Title')") InputProblem01%ProblemTitle !línea 1
-    write (idev,"(3i3,' !ipareq, mop, npepis')") ipareq,InputProblem01%mop,npepis !línea 2
+    write (idev,"(a70,' !Problem Title')") InputProblem01%ProblemTitle !lï¿½nea 1
+    write (idev,"(3i3,' !ipareq, mop, npepis')") ipareq,InputProblem01%mop,npepis !lï¿½nea 2
 
 !---Datos de la mezcla    
    !Solutos
-    write (idev,"(I2,' !Solutes number')") InputProblem01%MixtureInput%SolutesNumber !línea 3
+    write (idev,"(I2,' !Solutes number')") InputProblem01%MixtureInput%SolutesNumber !lï¿½nea 3
     recorreSolutes => InputProblem01%MixtureInput%Solutes
     do while(associated(recorreSolutes))
-        write(idev,"(20i3,' !Solute formula')") (recorreSolutes%Formula(j,1),recorreSolutes%Formula(j,2),j=1,recorreSolutes%GroupsNumber) !linea 4
-        write(idev,"(F9.2,' !Boilling point')")recorreSolutes%BoilingPoint !línea 5
+        write(idev,"(20i3,' !Solute formula')") (recorreSolutes%Formula(j,1),&
+                    recorreSolutes%Formula(j,2),j=1,recorreSolutes%GroupsNumber) !linea 4
+        write(idev,"(F9.2,' !Boilling point')")recorreSolutes%BoilingPoint !lï¿½nea 5
         recorreSolutes => recorreSolutes%next
     enddo
     
    !Ppal comp en el refinado    
-    write(idev,"(20i3,' !PCR formula')") (InputProblem01%MixtureInput%PCR%Formula(j,1),InputProblem01%MixtureInput%PCR%Formula(j,2)&
-                    ,j=1,InputProblem01%MixtureInput%PCR%GroupsNumber) !línea 6
+    write(idev,"(20i3,' !PCR formula')") (InputProblem01%MixtureInput%PCR%Formula(j,1),&
+                                InputProblem01%MixtureInput%PCR%Formula(j,2)&
+                    ,j=1,InputProblem01%MixtureInput%PCR%GroupsNumber) !lï¿½nea 6
    !Operation temperature
     write(idev,*) InputProblem01%T 
-!---Datos para el diseño molecular    
+!---Datos para el diseï¿½o molecular    
     if(MolecularDesign)then
         write (idev,"(6i3,' !MDV,MSV,msv1,mjk,idato(3),MDV2')") MDV,MSV,msv1,mjk,idato(3),MDV2 !linea 7
         InputProblem01%kilout=IDATO(3)
    !    Carca de grupos
    !    Grupos intermedios
         if (MDV.ne.0) then
-	        write (idev,"(11i3,' !NGK4,NGJ4,NGK3,NGK3J2,NGK2J3,NGK1J4,NGJ3,NGK2,NGK2J2,NGK1J3,NGJ2')")	NGK4,NGJ4,NGK3,NGK3J2,NGK2J3,NGK1J4,NGJ3,NGK2,NGK2J2,NGK1J3,NGJ2 !linea 8
+	        write (idev,"(11i3,' !NGK4,NGJ4,NGK3,NGK3J2,NGK2J3,NGK1J4,NGJ3,NGK2,NGK2J2,NGK1J3,NGJ2')")&
+            	        NGK4,NGJ4,NGK3,NGK3J2,NGK2J3,NGK1J4,NGJ3,NGK2,NGK2J2,NGK1J3,NGJ2 !linea 8
 	    write (idev,"(20i3,' !(mgr(i),i=1,MDV)')") (NGDV(i),i=1,MDV) !linea 9
         end if
    !    Grupos terminales    
         if(MSV.ne.0)then
-	        write (idev,"(3i3,' !NGK1,NGK1J2,NGM1')") NGK1,NGK1J2,NGM1 !línea 10
-	    write (idev,"(20i3,' !(mval(i),i=1,MSV)')") (NGSV(i),i=1,MSV) !línea 11
+	        write (idev,"(3i3,' !NGK1,NGK1J2,NGM1')") NGK1,NGK1J2,NGM1 !lï¿½nea 10
+	    write (idev,"(20i3,' !(mval(i),i=1,MSV)')") (NGSV(i),i=1,MSV) !lï¿½nea 11
         end if
         !Grupos terminales que no comparten un mismo grupo ppal con subgrupos de valencia dual.    
         if (msv1.ne.0) then
-	        write (idev,"(20i3,' !(mval(i),i=1,MSV)')") (msd(i),i=1,msv1) !línea 12
+	        write (idev,"(20i3,' !(mval(i),i=1,MSV)')") (msd(i),i=1,msv1) !lï¿½nea 12
 	        NGSV1(1:MSV1)=MSD(1:MSV1) 
         end if
         
@@ -2220,13 +2224,13 @@ subroutine write_input_file (MolecularDesign)
                 endif   
             enddo
 	        write (idev,*) DENS2,ifam,&
-	                    idato(1),idato(2),nalar,(ialar(i),i=1,nalar) !línea 13
+	                    idato(1),idato(2),nalar,(ialar(i),i=1,nalar) !lï¿½nea 13
             NSOL=IDATO(1)
             IS=IDATO(2)
         else !if (InputProblem01%mop.eq.2)
 	        write (1,*) dato2(1),dato2(2),dato2(3),dato2(4),dato2(5),&
         			bp1,DENS2,tazeo,xazeo,a1,a2,a3,b1,b2,b3,ifam,idato(1),&
-        			idato(2),nalar,(ialar(i),i=1,nalar) !línea 13
+        			idato(2),nalar,(ialar(i),i=1,nalar) !lï¿½nea 13
             SCLLI=DATO2(1) 
             DTC2S=DATO2(5)
             NSOL=IDATO(1)
@@ -2234,16 +2238,17 @@ subroutine write_input_file (MolecularDesign)
         endif
         
         if (mjk.eq.1) then
-            write (idev,"(20i3),' !ngm,(ngm1V(i),i=1,ngm)'") ngm,(ngm1V(i),i=1,ngm) !línea 14
+            write (idev,"(20i3),' !ngm,(ngm1V(i),i=1,ngm)'") ngm,(ngm1V(i),i=1,ngm) !lï¿½nea 14
 	        do i=1,ngm
-	    	    write (idev,"(20i3,' !mst(i),JST1(i),KST1(i),IST1(i),hst(i)')") mst(i),JST1(i),KST1(i),IST1(i),hst(i) !línea 15
+	    	    write (idev,"(20i3,' !mst(i),JST1(i),KST1(i),IST1(i),hst(i)')") mst(i),JST1(i),KST1(i),IST1(i),hst(i) !lï¿½nea 15
             enddo
         end if
     else ! not MolecularDesign
         write(idev,"(I2,' !Solvents number')") Size_LFMSs(FMSs)
         recorreSolvents => FMSs
         do while(associated(recorreSolvents))
-            write(idev,"(20i3,' !Solute formula')") (recorreSolvents%Formula(j,1),recorreSolvents%Formula(j,2),j=1,recorreSolvents%GroupsNumber)
+            write(idev,"(20i3,' !Solute formula')") (recorreSolvents%Formula(j,1),&
+            recorreSolvents%Formula(j,2),j=1,recorreSolvents%GroupsNumber)
             write(idev,"(i3,' !tIPO DE SOLVENTE')") recorreSolvents%tsolv
             recorreSolvents => recorreSolvents%next
         enddo        

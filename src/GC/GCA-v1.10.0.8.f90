@@ -1408,7 +1408,7 @@ SUBROUTINE PARGR (NC, NG, NGA, NST, inputFile, outputFile)
 !-----------------------------------------------------------------------
 105	FORMAT(///, X, 'Pure group atractive parameters:', /, 78X, 'Group configuration per component', /, 3X, &
 &	       'GN', 3X, 'T*(K)', 5X, 'q', 3X, 'g*(atm cm6/mol2)', 5X, 'g`', 8X, 'g"', 6X, "Ts(K)", 4X,        &
-&	       "exp", X, <NC>I5)
+&	       "exp", X, 10I5)
 106	FORMAT(1X, I4, 1X, F7.2, F8.4, 4X, F10.1, 2X, 2F10.5, 3X, F7.2, 2X, F5.2, 10I5)
 
 !  Lectura parametros de interaccion binaria grupales atractivos del banco de datos
@@ -1648,13 +1648,13 @@ SUBROUTINE PARGR (NC, NG, NGA, NST, inputFile, outputFile)
 	  write (outputFile, 218)
 218	  FORMAT(/,X,'Associating group configuration ',/,26X,'Compound No')
 
-	  write (outputFile, '(" Group    No of sites ",<NC>(I4,X))')((I), I=1,NC)
+	  write (outputFile, '(" Group    No of sites ",10(I4,X))')((I), I=1,NC)
 !
-	  write (outputFile, '(X,25("-"),<NC>(5("-")))')
+	  write (outputFile, '(X,25("-"),10(5("-")))')
 	  DO I=1,NGA
 
 	    write (outputFile, 219) I,MAssoc(I), (nyass(I,J), J=1,NC)
-219	    FORMAT(2X,I3,8X,I3,6X,<NC>(I4,X))
+219	    FORMAT(2X,I3,8X,I3,6X,10(I4,X))
 
 	  END DO
 !
@@ -1669,7 +1669,7 @@ SUBROUTINE PARGR (NC, NG, NGA, NST, inputFile, outputFile)
 
 	    enddo
 	  enddo
-2210	  format(3X,'|',<NST>(X,F7.1),' |')
+2210	  format(3X,'|',10(X,F7.1),' |')
 !  Escritura del volumen de asociaci�n
 	  write (outputFile, '(/," Associating volume matrix, [kappa] (cm3/mol)",/)')
 	  do i = 1,NGA
@@ -1679,7 +1679,7 @@ SUBROUTINE PARGR (NC, NG, NGA, NST, inputFile, outputFile)
 
 	    enddo
 	  enddo
-2220	  format(3X,'|',<NST>(X,F7.5),' |')
+2220	  format(3X,'|',10(X,F7.5),' |')
 
 	endif
 !-----------------------------------------------------------------------
@@ -1689,14 +1689,15 @@ SUBROUTINE PARGR (NC, NG, NGA, NST, inputFile, outputFile)
 101	FORMAT(5F10.2)
 102	FORMAT(I3,5F10.2)
 111	FORMAT(8F7.2)
-116	FORMAT(3X,'|',<NG>F8.3,' |')
+116	FORMAT(3X,'|',10F8.3,' |')
 115	FORMAT(/,1X,'Binary interaction parameter at T* matrix, [k*]',/)
 117	FORMAT(/,1X,'Binary interaction parameter temperature dependence matrix , [k`]',/)
 118	FORMAT(/,1X,'Binary dumping factors matrix, [alpha]',/)
 119	FORMAT(2I3,4F10.2)
 120	FORMAT(1X,90("-"))
-130	FORMAT(/,1X,'Los par�metros de interacci�n binaria entre los ','grupos',I2,' y ',I2,' no est�n disponibles.',/,1X,'Se usar�n', &
-     &        'valores est�ndar a menos que estos sean ingresador por el usuario')
+130	FORMAT(/,1X,'Los par�metros de interacci�n binaria entre los ','grupos',I2,&
+			' y ',I2,' no est�n disponibles.',/,1X,'Se usar�n', &
+            'valores est�ndar a menos que estos sean ingresador por el usuario')
 	RETURN
 ENDsubroutine
 !-----------------------------------------------------------------------
@@ -2012,8 +2013,10 @@ SUBROUTINE PARMOL (NC, NG, NST, inputFile, outputFile)
 	enddo
 	if (iEntalp /= 0) then
 
-	  write (outputFile, '(/," Passut-Danner constant for ideal gas enthalpy calculation:",/,"   Compound   A(BTU/lb)  B(BTU/(lb �R))  ", &
-     &             "C(BTU/(lb �R2)�1E3  D(BTU/(lb �R3))�1E6  E(BTU/(lb �R4))�1E10  F(BTU/(lb �R5))�1E14",/,128("-"))')
+	  write (outputFile, '(/," Passut-Danner constant for ideal gas enthalpy &
+	  		calculation:",/,"   Compound   A(BTU/lb)  B(BTU/(lb �R))  ", &
+                  "C(BTU/(lb �R2)�1E3  D(BTU/(lb �R3))�1E6  &
+	 		E(BTU/(lb �R4))�1E10  F(BTU/(lb �R5))�1E14",/,128("-"))')
 	  do i = 1,NC
 
 	    write (outputFile, 14)AName(i),HHA(i),HHB(i),1.D3*HHC(i),1.D6*HHD(i),1D10*HHE(i),1D14*HHF(i)
@@ -2469,7 +2472,9 @@ SUBROUTINE ZMAX (Z, iTyp, T, P, XN, iGues, NC, NG, NST, iC,fallo)
 	  IF (RNYT(K) >= 1.D-16) then
 
 	    DFV=DFV+RNYT(K)*Q(K)*(HEL5K+HEL2K-HEL2K*HEL12K)
-	    DFVDV = DFVDV - RO**2*RNYT(K)*Q(K)*((2.D0*HEL2K*HEL12K**2 - HEL2K*(HEL7K + 2.D0*HEL12K) - 2.D0*HEL5K*HEL12K) + HEL15K + 2.D0*HEL5K)*ZZ/2.D0
+	    DFVDV = DFVDV - RO**2*RNYT(K)*Q(K)*((2.D0*HEL2K*HEL12K**2 - &
+		HEL2K*(HEL7K + 2.D0*HEL12K) - 2.D0*HEL5K*HEL12K) + HEL15K + 2.D0*HEL5K)&
+		*ZZ/2.D0
 	    
 	  endif
 400	  HELP2(ICYC,K)=HEL2K              !h2k/h4k
@@ -2532,7 +2537,8 @@ SUBROUTINE ZMAX (Z, iTyp, T, P, XN, iGues, NC, NG, NST, iC,fallo)
 	      Xs(iCyc,major) = 2D0/(b_aux(iCyc) + root(iCyc))
 
 ! 	      dXs_aux(iCyc,major) = -Xs(iCyc,major)/(b_aux + root)   !auxiliary variable for derivative calculations	      
-	      dXs_dV(iCyc,major) = -Xs(iCyc,major)**2 * (1D0 - b_aux(iCyc) + (b_aux(iCyc)*(1D0 - b_aux(iCyc)) - 2D0*s2_Delta_V)/root(iCyc))*ro/2D0
+	      dXs_dV(iCyc,major) = -Xs(iCyc,major)**2 * (1D0 - b_aux(iCyc) + &
+		  (b_aux(iCyc)*(1D0 - b_aux(iCyc)) - 2D0*s2_Delta_V)/root(iCyc))*ro/2D0
 	      if (sm(major) == sm(3-major)) then
 	  
 	        Xs(iCyc,3-major) = Xs(iCyc,major)
@@ -2542,7 +2548,8 @@ SUBROUTINE ZMAX (Z, iTyp, T, P, XN, iGues, NC, NG, NST, iC,fallo)
 	  	      
 	        Xs(iCyc,3-major) = 1D0/(1D0 + s2_Delta_V*Xs(iCyc,major))
 ! 	        Xs(iCyc,3-major) = (1d0 - Xs(iCyc,major))/Xs(iCyc,major)/s1_Delta_V	
-	        dXs_dV(iCyc,3-major) = Xs(iCyc,3-major)**2 * s2_Delta_V*(dXs_dV(iCyc,major) - Xs(iCyc,3-major)*ro)
+	        dXs_dV(iCyc,3-major) = Xs(iCyc,3-major)**2 * s2_Delta_V*&
+			(dXs_dV(iCyc,major) - Xs(iCyc,3-major)*ro)
 	      
 	      endif
 	      sm_Xs(iCyc,major) = sm(major)*Xs(iCyc,major)		

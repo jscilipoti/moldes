@@ -2,7 +2,7 @@ module Design
 contains
  subroutine STRUCTURE_GENERATOR (JIST,MS,NC,NGSSV,NGSDV,SALIR,PROP)
 !-------------------------------------------------
-!   Descripción
+!   Descripciï¿½n
 !   - Variables de entrada
 !       vars:
 !   - Variables de salida
@@ -30,7 +30,7 @@ contains
     type(Compound),pointer::recorreSolutes
     type(CalculatedProperties),pointer::ListProperties
     type(CalculatedPerformance),pointer::ListPerformance      
-      !type(FinalStructure),pointer::IMSs !queda pendiente mdificar el código para agregar esto
+      !type(FinalStructure),pointer::IMSs !queda pendiente mdificar el cï¿½digo para agregar esto
 !   Integers
     integer::NGSDV1(NSVA,5),NUD(NSVA,NMAX),NUDC(NMSV),IIMS(10,2),&
         NUR(NA,NMAX),NUS(NSVA,NMAX),NSV1(3,NMAX),NSV2(3,NMAX),&
@@ -79,20 +79,20 @@ contains
 		write (6,"(' ',/,' ***** EVALUATING SINGLE GROUP SOLVENTS...')") 
 	endif
 !
-	if(ifam<=2) then	! Para aromáticos o single substances
+	if(ifam<=2) then	! Para aromï¿½ticos o single substances
 	    FinalStruct=.False.
-	    call GENESTINT (0,MDV2,NUD2,JISL) !estructuras alifáticas de las ramificaciones
-		call alif_fact (ngdv,ngsdv,mdv1,mdv2,nud2,jisl,ims_test) !elimina las estructuras intermedias alifáticas no factibles
-		call GENESTINT (IFAM,MDV1,NUD1,J) !estructuras aromáticas
+	    call GENESTINT (0,MDV2,NUD2,JISL) !estructuras alifï¿½ticas de las ramificaciones
+		call alif_fact (ngdv,ngsdv,mdv1,mdv2,nud2,jisl,ims_test) !elimina las estructuras intermedias alifï¿½ticas no factibles
+		call GENESTINT (IFAM,MDV1,NUD1,J) !estructuras aromï¿½ticas
 		JEI = J !IMPRIME EL NUMERO DE INTERMIEDOS GENERADOS
 		JIST=J
 		JIS=0
 		IF (IFAM.EQ.2) THEN !single substances
 			JIS = JIST
-		ELSE !aromáticos
-			DO 1205 J=1,JIST !acá JIST es el número de IMS's
+		ELSE !aromï¿½ticos
+			DO 1205 J=1,JIST !acï¿½ JIST es el nï¿½mero de IMS's
 				SOLDES = .FALSE.
-				DO 131 M=1,NSCM !NSCM es un parámetro (=10)
+				DO 131 M=1,NSCM !NSCM es un parï¿½metro (=10)
 					DO 132 K=1,2
 						MS(NC,M,K) = 0
   132				CONTINUE
@@ -100,8 +100,8 @@ contains
 				ISF=0
 				DO 133 I=1,MDV1 !bucle que guarda en MS la estructura intermedia
 					IF (NUD1(I,J).EQ.0) cycle
-				    ISF=ISF+1 ! cant de subgrup q participan en el diseño
-					MS(NC,ISF,1) = NGDV(I)  !número identificatorio 
+				    ISF=ISF+1 ! cant de subgrup q participan en el diseï¿½o
+					MS(NC,ISF,1) = NGDV(I)  !nï¿½mero identificatorio 
 					MS(NC,ISF,2) = NUD1(I,J) !cantidad
 					DO 134 K=1,5
 						NGSDV1(ISF,K)=NGSDV(I,K)
@@ -118,7 +118,8 @@ contains
 					    do while (contar)
 					        ms(1,:,:) = recorreSolutes%Formula
 					        BPSolute = recorreSolutes%BoilingPoint
-                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)
+                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,&
+							BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)
                             recorreSolutes => recorreSolutes%next
                             if(.not.associated(recorreSolutes)) exit
         	                    it=it+1
@@ -154,7 +155,7 @@ contains
 
 1910		WRITE (6,2050)
 
-		END IF !aromáticos
+		END IF !aromï¿½ticos
         
         CALL COMB_TERM (MSV,NUS,KST,JST,IST)
         CALL COMB_INTER (JISL,NUR,KSR,JSR,ISR,HSR)
@@ -166,7 +167,7 @@ contains
 		FinalStruct=.True. 
 
 1601	DO 1600 J=1,JIS !generador de SMS para ifam <= 2
-! genera todas las sms posibles a partir de la ims n° J		
+! genera todas las sms posibles a partir de la ims nï¿½ J		
 			DO 1548 M=1,NSCM
 				DO 1548 K=1,2
 					MS(NC,M,K) = 0
@@ -175,8 +176,8 @@ contains
 			ISI = 0
 			DO 1605 I=1,MDV !copia al vector IMS la IMS guardada en NUD (:,J)
 				IF (NUD(I,J).EQ.0) cycle
-				ISI=ISI+1 !ISI=número de subgrupos distintos en la sms
-				IMS(ISI,1) = NGDV(I) !número identificatorio
+				ISI=ISI+1 !ISI=nï¿½mero de subgrupos distintos en la sms
+				IMS(ISI,1) = NGDV(I) !nï¿½mero identificatorio
 				IMS(ISI,2) = NUD(I,J)!cantidad
 				DO 144 K=1,5
 					NGSDV1(ISI,K) = NGSDV(I,K)
@@ -192,12 +193,12 @@ contains
 1145		CONTINUE
 			IF (IFAM.EQ.1) THEN !aromatic solvents
 			    CALL AROMN (IPAREQ,ISI,NAC,NACCH,NACCH2,NATOT) !Averigua la cant de grupos terminales que deben agregarse
-			    IF (NATOT.EQ.0) THEN !El sig bloque de sentencias condicionales asigna los límites para los
-				    IIKST = 1        !bucles que agregan ramificaciones alifáticas (IIKSR y IKSR) y grupos 
+			    IF (NATOT.EQ.0) THEN !El sig bloque de sentencias condicionales asigna los lï¿½mites para los
+				    IIKST = 1        !bucles que agregan ramificaciones alifï¿½ticas (IIKSR y IKSR) y grupos 
 			        IKST = 1         !terminales (IIKST y IKST).
 			        IIKSR=2
 			        IKSR=1
-			    ELSEIF (NATOT.EQ.1) THEN !por qué IKSR toma estos valores?
+			    ELSEIF (NATOT.EQ.1) THEN !por quï¿½ IKSR toma estos valores?
 				    IIKST = 1
 			        IKST = MSV
 			        IIKSR = 1
@@ -205,8 +206,8 @@ contains
 			    ELSEIF (NATOT.EQ.2) THEN
 			        IIKST = 1
 			        IKST = KST					    
-			        IIKSR = KSR + 1 !desde la primer combinación de dos estructuras
-			        IKSR = JSR !hasta la última combinación de dos estructuras
+			        IIKSR = KSR + 1 !desde la primer combinaciï¿½n de dos estructuras
+			        IKSR = JSR !hasta la ï¿½ltima combinaciï¿½n de dos estructuras
 			    ELSEIF (NATOT.EQ.3) THEN
 			        IIKST = KST + 1
       			    IKST = JST
@@ -224,17 +225,17 @@ contains
 				IKST = 1
 				NATOT = 0
 			END IF
-!Bucle que agrega cadenas alifáticas según la cantidad de ramificaciones que
-!el anillo permita. La primer iteración (IIKSR-1) no agrega ninguna cadena alifática
+!Bucle que agrega cadenas alifï¿½ticas segï¿½n la cantidad de ramificaciones que
+!el anillo permita. La primer iteraciï¿½n (IIKSR-1) no agrega ninguna cadena alifï¿½tica
       		DO 2625 H=IIKSR-1,IKSR
       			ISF=ISI
-!El siguiente bucle elimina la ramificación alifática 
-!que pudo cargarse en la iteración anterior
+!El siguiente bucle elimina la ramificaciï¿½n alifï¿½tica 
+!que pudo cargarse en la iteraciï¿½n anterior
         	  	DO L=1,10
 			    	IIMS(L,1) = IMS(L,1)
 					IIMS(L,2) = IMS(L,2)
 			  	ENDDO
-!se agrega(n) la(s) ramificación(es) alifática(s)
+!se agrega(n) la(s) ramificaciï¿½n(es) alifï¿½tica(s)
       		  	IF (H.GE.IIKSR) THEN
       		    	nCH2=0
            	    	DO M=1,JISL
@@ -244,7 +245,7 @@ contains
                      	ISF=ISF+1
                      	nCH2=nCH2+iCH2
       			    ENDDO
-!La siguiente sentencia impide que se continúe con una IMS cuando el enlace entre el grupo (AC)
+!La siguiente sentencia impide que se continï¿½e con una IMS cuando el enlace entre el grupo (AC)
 !y el grupo (CH2) es inevitable
       			  	if(nCH2.gt.(2*NACCH+NACCH2))cycle
                 ENDIF
@@ -255,7 +256,7 @@ contains
 						MS(NC,L,1) = IIMS(L,1)
 						MS(NC,L,2) = IIMS(L,2)
 1777				CONTINUE
-					IF (NATOT.EQ.0) THEN !si no debe agregarse ningún GrupTerm
+					IF (NATOT.EQ.0) THEN !si no debe agregarse ningï¿½n GrupTerm
 						IST = ISF !cantidad de grupos distintos en la estructura
 					ELSE IF (NATOT.EQ.1) THEN !si debe agregarse un GrupTerm
 						CALL INGRESAR_TERMINAL (MS,ISF,NGSV(K),1) !!!
@@ -266,7 +267,7 @@ contains
 						DO 150 I=1,MSV
 							IF (NUS(I,K).EQ.0) cycle
 					    	NSV=NSV+1
-							NSV1(NSV,K)=NGSV(I)	! número identificatorio de subgrupo
+							NSV1(NSV,K)=NGSV(I)	! nï¿½mero identificatorio de subgrupo
 							NSV2(NSV,K)=NUS(I,K)  ! cantidad
 							NGSSV1(NSV,1)=NGSSV(I,1) !propiedades combinat.
 							NGSSV1(NSV,2)=NGSSV(I,2)
@@ -321,10 +322,10 @@ contains
 2625        CONTINUE
 1600	CONTINUE
 		nfsg=nsew+nswip+nsbi
-	else ! para alifáticos, mixtos o cíclicos (ifam 3,4 y 5)
+	else ! para alifï¿½ticos, mixtos o cï¿½clicos (ifam 3,4 y 5)
 !			que ahora usan Genestintram en lugar de genestint
 !
-!      		ntcp: Número de grupos terminales para completar una pre-SMS			
+!      		ntcp: Nï¿½mero de grupos terminales para completar una pre-SMS			
 		IF (IFAM.eq.4) THEN
 			ntcp=1
 		ELSE
@@ -349,16 +350,16 @@ contains
 		NPSWIP=0
 		ns=0
 		n1=0
-		DO 205 J=1,JIST !acá JIST es el número de IMS's
+		DO 205 J=1,JIST !acï¿½ JIST es el nï¿½mero de IMS's
 			SOLDES = .FALSE.
 			sms = .FALSE.
 			sm1 = .FALSE.
-			DO 31 M=1,NSCM !NSCM = 10 (parámetro)
+			DO 31 M=1,NSCM !NSCM = 10 (parï¿½metro)
 				DO 32 K=1,2
 					MS(NC,M,K) = 0
  32					CONTINUE
  31				CONTINUE
-			if (NFAv(Mv(j)).eq.-2) then ! ya es SMS (cícl. no ram.)
+			if (NFAv(Mv(j)).eq.-2) then ! ya es SMS (cï¿½cl. no ram.)
 				sms = .TRUE.
 				ikst=1
 				do L=1,msv !cantidad de subgrupos seleccionados por el usuario
@@ -422,7 +423,7 @@ contains
 							Kpv(Mpre,2) = Kv(Mv(j),2)+2*K1+K1J2
 							Kpv(Mpre,3) = Kv(Mv(j),3)+K1
 ! Ahora se forman todas las combinaciones concretas, correspondientes a la actual
-!"meta-pre-terminación" para la IMS concreta No. j, y válidas también para todas 
+!"meta-pre-terminaciï¿½n" para la IMS concreta No. j, y vï¿½lidas tambiï¿½n para todas 
 !	  las otras IMS con el mismo Mv(j) (o sea, hijas de la misma meta-IMS)
 							iK1=NCOMBIN(K1,NGK1)
 							iK1J2=NCOMBIN(K1J2,NGK1J2)
@@ -499,7 +500,8 @@ contains
                         call gc_special_groups(ms(3,:,:),bulky,nbulky)
                         if (InputProblem01%mop==4)then  !PROVISORIO PARA REACCIONES!!!!
 					       ! BPSolute = recorreSolutes%BoilingPoint
-                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)                            
+                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,&
+							BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)                            
                         else
                         contar=.true.
                         recorreSolutes => InputProblem01%MixtureInput%Solutes	
@@ -507,7 +509,8 @@ contains
 			     		do while (contar)
 					        ms(1,:,:) = recorreSolutes%Formula
 					        BPSolute = recorreSolutes%BoilingPoint
-                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)
+                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,&
+							BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)
                             recorreSolutes => recorreSolutes%next
                             if(.not.associated(recorreSolutes)) exit
                             it=it+1
@@ -535,7 +538,8 @@ contains
 			     		            do while (contar)
 						                ms(1,:,:) = recorreSolutes%Formula
 						                BPSolute = recorreSolutes%BoilingPoint
-                                        call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)							                								    
+                                        call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,&
+										BPSolute,ifam,NPSWIP,NPSBI,contar,ListPerformance,it)							                								    
                                         recorreSolutes => recorreSolutes%next
                                         if(.not.associated(recorreSolutes)) exit
             	                            it=it+1
@@ -591,7 +595,7 @@ contains
 		READ (5,890) SIGUE
 !C
 !c	 Quedan almacenadas en NUD, JIS pre-SMS para las cuales 
-!c		NOACE  = false (todos los a necesarios están disponibles)
+!c		NOACE  = false (todos los a necesarios estï¿½n disponibles)
 !c		SOLDES = false (factible)
 !C		CONTAR = true (aceptable -en cuanto a SCLLI y SLSUP1 o SOLV)
 !C	 y por lo tanto	siguen en carrera.
@@ -654,7 +658,7 @@ contains
 			ISF = 0
 			DO 605 I=1,MDV
 				IF (NUD(I,J).NE.0) THEN
-					ISF=ISF+1 !isf=número de subgrupos distintos en la pre-SMS
+					ISF=ISF+1 !isf=nï¿½mero de subgrupos distintos en la pre-SMS
 					IMS(ISF,1) = NGDV(I)
 					IMS(ISF,2) = NUD(I,J)
 				END IF
@@ -682,7 +686,7 @@ contains
 					ntcpa=1
 				end if
 			end if
-			IF (IFAM.EQ.1) THEN !No debería pasar nunca por acá...
+			IF (IFAM.EQ.1) THEN !No deberï¿½a pasar nunca por acï¿½...
 				CALL AROMN (IPAREQ,ISF,NAC,NACCH,NACCH2,NATOT)
 				IF (NATOT.EQ.0) THEN
 					IKST = 1
@@ -691,10 +695,10 @@ contains
 				ELSE IF (NATOT.EQ.2) THEN
 					IKST = KST
 				END IF
-			ELSE IF (IFAM.EQ.2) THEN ! ...ni por acá.
+			ELSE IF (IFAM.EQ.2) THEN ! ...ni por acï¿½.
 				IKST = 1
 				NATOT = 0
-			ELSE ! ifam = 3, 4 ó 5
+			ELSE ! ifam = 3, 4 ï¿½ 5
 				if(Mprev(j).ne.Mprev(j-1)) then	! para generar nuevas 
 !c		terminaciones (meta y concretas) cuando cambia la meta pre-SMS
 					ikst=0
@@ -729,7 +733,7 @@ contains
 							NmFSG=NmFSG+1 ! Number of metha 
 !												Final Solvents Generated
 !c Ahora se forman todas las combinaciones concretas, correspondientes a la actual
-!c "meta-terminación" para la preSMS concreta No. j, y válidas también para todas 
+!c "meta-terminaciï¿½n" para la preSMS concreta No. j, y vï¿½lidas tambiï¿½n para todas 
 !c	  las otras IMS con el mismo Mv(j) (o sea, hijas de la misma meta-IMS)
 							iK1=NCOMBIN(K1,NGK1)
 							iK1J2=NCOMBIN(K1J2,NGK1J2)
@@ -789,7 +793,7 @@ contains
 					MS(NC,L,1) = IMS(L,1)
 					MS(NC,L,2) = IMS(L,2)
  777			CONTINUE
-!c	la pre-SMS se copió en MS(NC, , )
+!c	la pre-SMS se copiï¿½ en MS(NC, , )
 				if (ifam.ge.3) then
 					if(nsmsv(ns-1).ne.j.and.nsm1v(n1-1).ne.j) then
 						do L=1,niterm(k)
@@ -839,7 +843,7 @@ contains
 						DO 49 I=1,MSV
 							IF (NUS(I,K).NE.0) THEN
 								NSV=NSV+1
-								NSV1(NSV,K)=NGSV(I)	! número de subgrupo
+								NSV1(NSV,K)=NGSV(I)	! nï¿½mero de subgrupo
 								NSV2(NSV,K)=NUS(I,K)  ! cantidad (1 o 2)
 								NGSSV1(NSV,1)=NGSSV(I,1) !propiedades combinat.
 								NGSSV1(NSV,3)=NGSSV(I,3)
@@ -855,7 +859,7 @@ contains
 							CALL INGRESAR_TERMINAL (MS,ISF+1,NSV1(2,K),1)
 							IST=ISF+2
 						END IF
-!c	Ahora quedó la SMS completa, almacenada "provisoriamente" en MS(NC,_,_)
+!c	Ahora quedï¿½ la SMS completa, almacenada "provisoriamente" en MS(NC,_,_)
 !C
 !C					FEASIBILITY TEST OF FINAL STRUCTURES
 						IF (IFAM.EQ.1) THEN
@@ -900,7 +904,8 @@ contains
 			     	    do while (solace)
 					        ms(1,:,:) = recorreSolutes%Formula
 					        BPSolute = recorreSolutes%BoilingPoint
-                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,BPSolute,ifam,NSWIP,NSBI,solace,ListPerformance,it)						    					
+                            call Evaluate_Mixture(.True.,FinalStruct,MS,NC,temp1,&
+							BPSolute,ifam,NSWIP,NSBI,solace,ListPerformance,it)						    					
                             recorreSolutes => recorreSolutes%next
                             if(.not.associated(recorreSolutes)) exit
                             it=it+1
@@ -974,12 +979,12 @@ contains
 		IF (IFAM.NE.1) THEN
 			WRITE (6,788) NmFSG
 			WRITE (2,788) NmFSG
-!c En realidad NmFSG está sobredimensionado porque hay repetidos
+!c En realidad NmFSG estï¿½ sobredimensionado porque hay repetidos
 !c Lo importante es que finalmente no haya solventes repetidos
-!c y eso se solucionó con la subrutina eliminar_repetidos.
-!c Entonces NFSG efectivamente indica un número de solventes distintos
+!c y eso se solucionï¿½ con la subrutina eliminar_repetidos.
+!c Entonces NFSG efectivamente indica un nï¿½mero de solventes distintos
 !c Debido a esto, siempre que no haya mas de un grupo terminal 
-!c por metha grupo, NFSG será mayor que NmFSG.
+!c por metha grupo, NFSG serï¿½ mayor que NmFSG.
 		END IF
 	END IF
 	WRITE (6,789) NFSG

@@ -5,8 +5,8 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
 !C  *                                      para el calculo de flash y *  
 !C  *                                      curva binodal (icalc 0 y 1)*
 !C  *                                                                 *
-!C  *                          ASOCIACIÓN CRUZADA					   *		  
-!C  *                       VERSIÓN GENERALIZADA                      *        
+!C  *                          ASOCIACIï¿½N CRUZADA					   *		  
+!C  *                       VERSIï¿½N GENERALIZADA                      *        
 !C  *              FEBRERO 2006 MODIFICADA POR                        *
 !C  *                   ALFONSINA  ESTER ANDREATTA                    *        
 !C  *        BASADA EN LAS SIMPLLIFICACIONES DE LOS PAPERS:           *
@@ -15,14 +15,14 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
 !c  * Michelsen, et al. (Fluid Phase Equilibria, 180(2001)165-174 )   *		
 !C  * Tan, et al.  (Ind. Eng. Chem. Res, 2004,43,203-208).			   *	   	
 !C  *																   *	   	
-!C  *        Esto permitió  que todos los casos particulares          *         
-!c  *       de asociación se puedan simplificar a un único cálculo. 
+!C  *        Esto permitiï¿½  que todos los casos particulares          *         
+!c  *       de asociaciï¿½n se puedan simplificar a un ï¿½nico cï¿½lculo. 
 !c
-!c   Válido para un máximo número grupo asociativo de 12
-!c   Con la implementación en el cálculo de la fracción no asociada en el componente puro 
-!c   por  el metodo iterativo aquí implementado se permite que una molécula
-!c   tenga más de un grupo asociativo 14/07/06
-!C  El cálculo se limita a que el número máximo de sitios sea 2(por razones matemáticas)
+!c   Vï¿½lido para un mï¿½ximo nï¿½mero grupo asociativo de 12
+!c   Con la implementaciï¿½n en el cï¿½lculo de la fracciï¿½n no asociada en el componente puro 
+!c   por  el metodo iterativo aquï¿½ implementado se permite que una molï¿½cula
+!c   tenga mï¿½s de un grupo asociativo 14/07/06
+!C  El cï¿½lculo se limita a que el nï¿½mero mï¿½ximo de sitios sea 2(por razones matemï¿½ticas)
 !c                                                       
 !C  *******************************************************************  
 !C  *                                           DATE: 24/3 - 1982 /TJ *  
@@ -60,16 +60,16 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
       DIMENSION NTEXT(36),X(2),ANT(10,3),XMAT(30,30),WORK(30,5)         
       integer::ICALC,IPR,IOUT,NOVAP,ig            
       character(len=36)::name, name1 
-      integer:: parameters 
+      integer:: parameters, output
         common/NumGrup/NG
       dimension xmj(10),actgam(10),agam(10,4),de(10,10),pe(2,2)
       logical NOACE
 !c-----
         output=5673
-	  OPEN (UNIT=output,FILE='llecalasnew.OUT',FORM='FORMATTED')
-	  write(output,"(20I3)") (compuestos(5,i,1),compuestos(5,i,2),i=1,10)
+	OPEN (UNIT=output,FILE='llecalasnew.OUT',FORM='FORMATTED')
+	write(output,"(20I3)") (compuestos(5,i,1),compuestos(5,i,2),i=1,10)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
-    z(:)=xtemporal(:) !composición temporal para probar llecalas
+    z(:)=xtemporal(:) !composiciï¿½n temporal para probar llecalas
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     act(:) = 0.0
     NC=N
@@ -102,7 +102,7 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
     IF (IOUT.EQ.1) OPEN (UNIT=1,FILE='lleasoccuzada.OUT',FORM='FORMATTED')                                                     
    
     IF(NOVAP/=0) then  !   novap:  0-'VAPOR PHASE NOT INCLUDED IN FLASH-CALCULATIONS'
-        write(*,*) "ver comentarios en esta parte del código"
+        write(*,*) "ver comentarios en esta parte del cï¿½digo"
         pause
         !adaptar los siguientes bucles
         !DO J=1,N                                                        
@@ -141,7 +141,7 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
       
     
 !================================================================
-    !Acá debería ir el if que hace el cálculo para icalc == 2 
+    !Acï¿½ deberï¿½a ir el if que hace el cï¿½lculo para icalc == 2 
 !================================================================
     DO I=1,N                                                       
         DO J=1,N                                                       
@@ -160,8 +160,9 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
         Z(I)=Z(I)/ZSUM                                                    
     enddo  
     
-    WRITE(6,"(' TEMPERATURE =',F10.4,' K, PRESSURE =',F7.3,' ATM, FEED =',F10.2,' MOLES',/,' FEED COMPOSITION (MOLE PERCENT):',/,1X,15(2PF7.3))  ")&
-          T,PP,ZSUM,(Z(I),I=1,N)                               
+    WRITE(6,"(' TEMPERATURE =',F10.4,' K, PRESSURE =',F7.3,' ATM, FEED =',&
+                F10.2,' MOLES',/,' FEED COMPOSITION (MOLE PERCENT):',/,&
+                1X,15(2PF7.3))  ") T,PP,ZSUM,(Z(I),I=1,N)                               
     
     CALL unifaclle(N,1,Z,AL,DA,PACT)                                       
     
@@ -177,7 +178,7 @@ subroutine llecalas(T,PP,compuestos,N,xtemporal,act)
     enddo
     
     NF=1  
-    !esta línea es llamada desde el final de las instrucciones
+    !esta lï¿½nea es llamada desde el final de las instrucciones
 50  CALL STIG(compuestos,n,Y,S)                                                    
     
     IF(S <= -1.D-7) then                                           
@@ -1062,8 +1063,8 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCALFONSINACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 
 	!***********************************calculo de xoh**************************
-!c Cálculo de la  fracción no asociada Paper:Ind. Eng. Chem. Res, 2004,43,203-208   
-!c !Inicializació
+!c Cï¿½lculo de la  fracciï¿½n no asociada Paper:Ind. Eng. Chem. Res, 2004,43,203-208   
+!c !Inicializaciï¿½
       if(nga.ne.0) then
       xoh=1.0d0 
       del=1.d0
@@ -1095,7 +1096,7 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
  
 	 
 
-!cc Fin del Cálculo de la  fracción no asociada 
+!cc Fin del Cï¿½lculo de la  fracciï¿½n no asociada 
 !c	!*****************************calculo de xohi0**************************************
 !C	xohi0=1d0
 !c	do i=1, nc
@@ -1117,9 +1118,9 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
 !C		end do
 !c	end do
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCALFONSINACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-!c****************************calculo de xohi0(esta implementación permite que una molécula
-!c tenga más de un grupo asociativo 14/07/06**************************************
-!c !Inicializació
+!c****************************calculo de xohi0(esta implementaciï¿½n permite que una molï¿½cula
+!c tenga mï¿½s de un grupo asociativo 14/07/06**************************************
+!c !Inicializaciï¿½
      
       if(nga.ne.0) then
       xohi0=1.D0
@@ -1149,8 +1150,8 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
       end if
 
 !c*****************************fin del calculo de xohi0**************************************
-!Cálculo del gama de asociación ALFONSINA CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-!C actas(M) = LOGARITMO NATURAL DEL GAMA DE ASOCIACIÓN DEL COMPONENTE I  
+!Cï¿½lculo del gama de asociaciï¿½n ALFONSINA CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!C actas(M) = LOGARITMO NATURAL DEL GAMA DE ASOCIACIï¿½N DEL COMPONENTE I  
 
        if(nga.ne.0) then	
 
@@ -1195,8 +1196,8 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
 !********************************calculo de dxkdni Alfonsina**************************************
 
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCALFONSINA CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-!cCalcula los elementos de la matriz deltapq para el cálculo de la derivada de la fracción 
-!c no asociada respecto a la fracción molar del componente
+!cCalcula los elementos de la matriz deltapq para el cï¿½lculo de la derivada de la fracciï¿½n 
+!c no asociada respecto a la fracciï¿½n molar del componente
       psin=0.0d0
 	if(nga.ne.0) then
 	m_lambda1=0.0d0
@@ -1221,8 +1222,8 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
 	end if 
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCALFONSINA CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 !
-!c Calculo de  los elementos de la matriz [Yp] para el cálculo de la derivada de la fracción 
-!c no asociada respecto a la fracción molar del componente
+!c Calculo de  los elementos de la matriz [Yp] para el cï¿½lculo de la derivada de la fracciï¿½n 
+!c no asociada respecto a la fracciï¿½n molar del componente
       if(nga.ne.0) then
       do k=1,nga
 
@@ -1256,7 +1257,7 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
       m_lambda1=m_lambda
        call ludcmp(m_lambda1,N,NP,indx,d1)
        call lubksb(m_lambda1,N,NP,indx,psin)
-!c colectando las derivadas en su correspondiente subíndice
+!c colectando las derivadas en su correspondiente subï¿½ndice
       z=0
 	do m=1,2
 	do l=1, nga
@@ -1277,10 +1278,10 @@ subroutine unifaclle(NK,NDIF,X,ACT,DACT,PACT)
       end do
 	end do
 
-!c fin del cálculo de la derivada de la fracción no asociada respecto a la 
-!c fracción molar del componente
+!c fin del cï¿½lculo de la derivada de la fracciï¿½n no asociada respecto a la 
+!c fracciï¿½n molar del componente
 !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCALFONSINACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-!C dgasdx(M) = derivada LOGARITMO NATURAL DEL GAMA DE ASOCIACIÓN DEL COMPONENTE I
+!C dgasdx(M) = derivada LOGARITMO NATURAL DEL GAMA DE ASOCIACIï¿½N DEL COMPONENTE I
       if(nga.ne.0) then
    
       DO l=1,NGA 
